@@ -1,9 +1,52 @@
 import React, { useState } from 'react';
 import './App.css';
+import Header from './components/Header';
 import { MdCloudUpload, MdDelete } from 'react-icons/md';
 import { AiFillFileImage } from 'react-icons/ai';
-import logo from './logo.gif';
+import UploadSection from './components/UploadSection';
 
+
+
+
+function App(){
+    return (
+        <div>
+            <Header />
+            <UploadSection />
+        </div>
+    );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+export default App;
+
+
+
+
+
+
+
+
+
+/*
 function Uploader() {
     const [fileData, setFileData] = useState({
         image: null,
@@ -106,7 +149,7 @@ function Uploader() {
         });
         setUploadedFileName(null);
     };
-    */
+    
 
     return (
         <div>
@@ -209,4 +252,6 @@ function Uploader() {
     );
 }
 
-export default Uploader;
+*/
+
+
