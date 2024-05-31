@@ -6,7 +6,7 @@ import ImagePreview from './ImagePreview';
 
 const UploaderForm = ({ fileData, handleFileChange, handleFileUploadClick, handleFileRemove, uploadImage, uploadedFileName }) => (
     <div className="box-container">
-        <form onClick={handleFileUploadClick}>
+        <form className='form-images' onClick={handleFileUploadClick}>
             <input
                 type="file"
                 accept="image/*"
