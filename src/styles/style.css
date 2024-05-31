@@ -6,7 +6,7 @@
     outline: none;
     border: none;
     text-decoration: none;
-    transition: all .2s linear;
+
 }
 
 *::selection {
@@ -103,8 +103,6 @@ html {
     border: var(--border);
     margin: 1rem 0;
 }
-
-
 
 .form-container form p a:hover {
     text-decoration: underline;

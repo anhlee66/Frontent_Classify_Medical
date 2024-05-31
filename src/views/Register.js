@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import axios from "axios";
 import { useNavigate } from "react-router-dom"
-import './styles/style.css';
+import '../styles/style.css';
 
 
 const Register = () => {
@@ -31,29 +31,62 @@ const Register = () => {
 
     return (
         <div className='form-container'>
-                <form onSubmit={Register} >
+            <form onSubmit={Register} >
 
-                    <h3>register form</h3>
-                    <p>{msg}</p>
-                    
-                    <label className='label'>Name</label>
-                    <input type='text' className='box' placeholder='Name' value={name} onChange={(e) => setName(e.target.value)} />
-                
-                    <label className='label'>Email</label>
-                    <input type='text' className='box' placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)} />
-                    
-                    <label className='label'>Password</label>
-                    <input type='password' className='box' placeholder='******' value={password} onChange={(e) => setPassword(e.target.value)} />
-                    
+                <h3>register form</h3>
+                <p>{msg}</p>
 
-                    <label className='label'>Confirm Password</label>
-                    <input type='password' className='box' placeholder='******' value={confPassword} onChange={(e) => setconfPassword(e.target.value)} />
+                <label className='label'>Name</label>
+                <input
+                    type='text'
+                    className='box'
+                    placeholder='Name'
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                />
 
-                    <button className='btn'>Register</button>
+                <label className='label'>Email</label>
+                <input 
+                    type='text' 
+                    className='box' 
+                    placeholder='Email' 
+                    value={email} 
+                    onChange={(e) => setEmail(e.target.value)}
+                    required 
+                />
 
-                    <p>already have an account? <a href="/">login now</a></p>
+                <label className='label'>Password</label>
+                <input 
+                    type='password' 
+                    className='box' 
+                    placeholder='******' 
+                    value={password} 
+                    onChange={(e) => setPassword(e.target.value)}
+                    required 
+                />
 
-                </form>
+
+                <label className='label'>Confirm Password</label>
+                <input 
+                    type='password' 
+                    className='box' 
+                    placeholder='******' 
+                    value={confPassword} 
+                    onChange={(e) => setconfPassword(e.target.value)}
+                    required 
+                />
+
+                <input 
+                    type='submit'
+                    name='submit'
+                    className='btn' 
+                    value="Register"
+                />
+
+                <p>Already have an account? <a href="/login">login now</a></p>
+
+            </form>
         </div>
     )
 }
