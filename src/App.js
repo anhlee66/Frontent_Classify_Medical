@@ -1,8 +1,5 @@
-import React, { useState } from 'react';
-import './App.css';
+import './styles/App.css';
 import Header from './components/Header';
-import { MdCloudUpload, MdDelete } from 'react-icons/md';
-import { AiFillFileImage } from 'react-icons/ai';
 import UploadSection from './components/UploadSection';
 
 
