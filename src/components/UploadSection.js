@@ -3,12 +3,14 @@ import UploaderForm from './UploaderForm';
 import ImageList from './ImageList';
 import ImagePreview from './ImagePreview';
 import useDirectoryPicker from '../hooks/useDirectoryPicker';
+import AnimatedArrow from '../utils/Animated'
 
 const UploadSection = () => {
-    const [fileData, setFileData] = useState({ image: null, fileName: 'No selected file' });
+    const [fileData, setFileData] = useState({ image: null, fileName: 'No selected Image' });
     const [uploadedFileName, setUploadedFileName] = useState(null);
     const [selectedImage, setSelectedImage] = useState(null);
-    const { images, isDirectoryOpen, handleDirectoryOpen } = useDirectoryPicker();
+    const { images, handleDirectoryOpen } = useDirectoryPicker();
+    
 
     const handleFileChange = ({ target: { files } }) => {
         if (files && files[0]) {
@@ -21,7 +23,7 @@ const UploadSection = () => {
     };
 
     const handleFileRemove = () => {
-        setFileData({ image: null, fileName: 'No selected file' });
+        setFileData({ image: null, fileName: 'No selected' });
         setUploadedFileName(null);
     };
 
@@ -33,6 +35,7 @@ const UploadSection = () => {
     const handleImageClick = (image) => {
         setSelectedImage(image);
     };
+
 
     return (
         <main>
@@ -47,24 +50,20 @@ const UploadSection = () => {
                     <div className="main-panel">
                         <ImagePreview selectedImage={selectedImage} />
                     </div>
-                    <div className="right-panel">
-                        <button type="button" className="btn-upload" onClick={uploadImage}>
-                            Upload
-                        </button>
-                    </div>
                 </div>
             </div>
 
-            {!isDirectoryOpen && (
-                <UploaderForm
-                    fileData={fileData}
-                    handleFileChange={handleFileChange}
-                    handleFileUploadClick={handleFileUploadClick}
-                    handleFileRemove={handleFileRemove}
-                    uploadImage={uploadImage}
-                    uploadedFileName={uploadedFileName}
-                />
-            )}
+            <AnimatedArrow />
+
+            <UploaderForm
+                fileData={fileData}
+                handleFileChange={handleFileChange}
+                handleFileUploadClick={handleFileUploadClick}
+                handleFileRemove={handleFileRemove}
+                uploadImage={uploadImage}
+                uploadedFileName={uploadedFileName}
+            />
+
         </main>
     );
 };

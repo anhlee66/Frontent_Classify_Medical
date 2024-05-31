@@ -1,9 +1,11 @@
 import React from 'react';
 import { MdCloudUpload, MdDelete } from 'react-icons/md';
 import { AiFillFileImage } from 'react-icons/ai';
+import ImagePreview from './ImagePreview';
+
 
 const UploaderForm = ({ fileData, handleFileChange, handleFileUploadClick, handleFileRemove, uploadImage, uploadedFileName }) => (
-    <div className="upload-image">
+    <div className="box-container">
         <form onClick={handleFileUploadClick}>
             <input
                 type="file"
@@ -13,21 +15,24 @@ const UploaderForm = ({ fileData, handleFileChange, handleFileUploadClick, handl
                 onChange={handleFileChange}
             />
             {fileData.image ? (
-                <img src={fileData.image} width={500} height={480} alt={fileData.fileName} />
+                <img src={fileData.image} width={300} height={300} alt={fileData.fileName} />
             ) : (
                 <>
                     <MdCloudUpload color="#1475cf" size={60} />
-                    <p>Browse Files to upload</p>
+                    <p>Browse Image to upload</p>
                 </>
             )}
+
+            
         </form>
 
         <section className="uploaded-row">
             <AiFillFileImage color="#1475cf" />
             <span className="upload-content">
                 {fileData.fileName}
-                <MdDelete onClick={handleFileRemove} className="delete-icon" />
+                
             </span>
+            <MdDelete onClick={handleFileRemove} className="delete-icon" />
         </section>
 
         <button type="button" className="btn-upload" onClick={uploadImage}>
@@ -40,6 +45,7 @@ const UploaderForm = ({ fileData, handleFileChange, handleFileUploadClick, handl
                 <p>{uploadedFileName}</p>
             </section>
         )}
+
     </div>
 );
 

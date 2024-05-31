@@ -1,15 +1,23 @@
 import React, { useState } from 'react';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+<<<<<<< HEAD
 import makeService from "../services/user"
 const Login = () => {
     const [username, setUsername] = useState('');
+=======
+import '../styles/style.css';
+
+const Login = () => {
+    const [email, setEmail] = useState('');
+>>>>>>> fe11ceaa601d370cb2cdeb25595a0ffc93d6d3c3
     const [password, setPassword] = useState('');
     const [msg, setMsg] = useState('');
     const navigate = useNavigate();
 
     const Auth = async (e) => {
         e.preventDefault();
+<<<<<<< HEAD
         const auth = {
             'username':username,
             'password':password
@@ -25,10 +33,23 @@ const Login = () => {
                 navigate('/officer')
             }
             else navigate('/student')
+=======
+        try {
+            await axios.post('http://localhost:5000/login', {
+                email: email,
+                password: password
+            });
+            navigate("/dashboard");
+        } catch (error) {
+            if (error.response) {
+                setMsg(error.response.data.msg);
+            }
+>>>>>>> fe11ceaa601d370cb2cdeb25595a0ffc93d6d3c3
         }
     }
 
     return (
+<<<<<<< HEAD
         <section className="hero has-background-grey-light is-fullheight is-fullwidth">
             <div className="hero-body">
                 <div className="container">
@@ -120,6 +141,30 @@ const Login = () => {
         //     </div>
         // </form>
         // </div>
+=======
+        <div className='form-container'>
+            <form onSubmit={Auth} >
+                <h3>Login Now</h3>
+                <p >{msg}</p>
+                        <input 
+                            type='text' 
+                            className='box' 
+                            placeholder='Enter your username' 
+                            value={email} 
+                            onChange={(e) => setEmail(e.target.value)} 
+                        />
+                        <input 
+                            type='password' 
+                            className='box' 
+                            placeholder='Enter your password' 
+                            value={password} 
+                            onChange={(e) => setPassword(e.target.value)} 
+                        />
+                <button className='btn'>Login</button>
+                <p>don't have an account? <a href="/register">register now</a></p>
+            </form>
+        </div>
+>>>>>>> fe11ceaa601d370cb2cdeb25595a0ffc93d6d3c3
     )
 }
 
