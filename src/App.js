@@ -1,21 +1,27 @@
 import React, { useState } from 'react';
 import './App.css';
-import Header from './components/Header';
-import { MdCloudUpload, MdDelete } from 'react-icons/md';
-import { AiFillFileImage } from 'react-icons/ai';
-import UploadSection from './components/UploadSection';
 
-
+import {BrowserRouter,Route, Routes} from 'react-router-dom'
+import Login from './views/Login';
+import Admin from './views/Admin';
+import Student from './views/Student';
+import officer from './views/Officer';
 
 
 function App(){
     return (
-        <div>
-            <Header />
-            <UploadSection />
-        </div>
+        <BrowserRouter>
+            <Routes>
+                {/* <Route path="/" Component={Home}/> */}
+                <Route path='/login' Component={Login}/>
+                <Route path='/admin/dashboard' Component={Admin} />
+                <Route path='/student' Component={Student} />
+                <Route path='/officer' Component={officer} /> 
+            </Routes>
+        </BrowserRouter> 
     );
 }
+
 
 
 
