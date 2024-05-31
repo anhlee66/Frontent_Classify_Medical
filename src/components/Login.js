@@ -24,46 +24,28 @@ const Login = () => {
     }
 
     return (
-        <section className="hero has-background-grey-light is-fullheight is-fullwidth">
-            <div className="hero-body">
-                <div className="container">
-                    <div className="columns is-centered">
-                        <div className="column is-4-desktop">
-                            <form onSubmit={Auth} className="box">
-                                <p className='has-text-centered'>{msg}</p>
-                                <div className='field mt-5'>
-                                    <label className='label'>Email or Username</label>
-                                    <div className='controls'>
-                                        <input 
-                                            type='text' 
-                                            className='input' 
-                                            placeholder='Email or Username' 
-                                            value={email} 
-                                            onChange={(e) => setEmail(e.target.value)} 
-                                        />
-                                    </div>
-                                </div>
-                                <div className='field mt-5'>
-                                    <label className='label'>Password</label>
-                                    <div className='controls'>
-                                        <input 
-                                            type='password' 
-                                            className='input' 
-                                            placeholder='******' 
-                                            value={password} 
-                                            onChange={(e) => setPassword(e.target.value)} 
-                                        />
-                                    </div>
-                                </div>
-                                <div className='field mt-5'>
-                                    <button className='button is-success is-fullwidth'>Login</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <div className='form-container'>
+            <form onSubmit={Auth} >
+                <h3>Login Now</h3>
+                <p >{msg}</p>
+                        <input 
+                            type='text' 
+                            className='box' 
+                            placeholder='Enter your username' 
+                            value={email} 
+                            onChange={(e) => setEmail(e.target.value)} 
+                        />
+                        <input 
+                            type='password' 
+                            className='box' 
+                            placeholder='Enter your password' 
+                            value={password} 
+                            onChange={(e) => setPassword(e.target.value)} 
+                        />
+                <button className='btn'>Login</button>
+                <p>don't have an account? <a href="/register">register now</a></p>
+            </form>
+        </div>
     )
 }
 
