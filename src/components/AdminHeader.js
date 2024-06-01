@@ -2,6 +2,7 @@ import logo from "../assets/logo.gif"
 import Search from "./Search"
 import makeService from '../services/user'
 import { useNavigate } from "react-router-dom"
+import "../../node_modules/bootstrap/dist/css/bootstrap.min.css"
 function AdminHeader({username, avatar,onClick}) {
     const navigator = useNavigate()
     async function onLogout(){
@@ -13,7 +14,7 @@ function AdminHeader({username, avatar,onClick}) {
         }
     }
     return (<>
-        <div>
+        <div className="admin-header">
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <div className="navbar-brand">
                     <img src={logo} alt="logo" width={50}/>
@@ -25,7 +26,7 @@ function AdminHeader({username, avatar,onClick}) {
                             <a  id="home"  className="nav-link" href="#">Home</a>
                         </li>
                         <li className="nav-item" onClick={onClick} >
-                            <a id="model" className="nav-link" href="#">Model</a>
+                            <a id="model" className="nav-link " href="#">Model</a>
                         </li>
                         <li className="nav-item" onClick={onClick} >
                             <a id="student" className="nav-link" href="#">Student</a>
@@ -39,7 +40,7 @@ function AdminHeader({username, avatar,onClick}) {
                     </div>
                 </div>
                
-                <div className="">
+                {/* <div className="">
                     <div>
                         <img src={avatar} alt="avatar" width={40}/>
                     </div>
@@ -49,7 +50,7 @@ function AdminHeader({username, avatar,onClick}) {
                     <div>
                         <button>setting</button>
                     </div>
-                </div>
+                </div> */}
             </nav>
         </div>
     </>)

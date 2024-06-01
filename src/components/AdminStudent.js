@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import makeService from '../services/user'
+import '../styles/style.css'
 function AdminStudent() {
     const [students, setStudents] = useState([])
     useEffect(() => {
@@ -17,18 +18,50 @@ function AdminStudent() {
         fetchAPI()
     }, [])
     console.log(students)
-    return (<>
-        <div>List student</div>
-        {students.map((value) => (
-            <div>
-                <span>{value.id}</span>
-                <span>{value.name}</span>
-                <span>{value.email}</span>
-                <span>{value.gender}</span>
-                <span>{value.password}</span>
-                <button >Edit</button>
-            </div>))}
-    </>)
+    return (
+    <div className='student-container'>
+        {/* <div >List student</div> */}
+        <table className='student'>
+            <tr>
+                <th>
+                    Student Name
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Gender
+                </th>
+                <th>
+                    Password
+                </th>
+                <th >
+                    Action
+                </th>
+            </tr>
+            {students.map((value) => (
+                <tr>
+                    <td>
+                        {value.name}
+                    </td>
+                    <td>
+                        {value.email}
+                    </td>
+                    <td>
+                        {value.gender}
+                    </td>
+                    <td>
+                        <input type='password' readOnly value={value.password}/>
+                    </td>
+                    <td className='action'>
+                        <button className='btn btn-primary'>Edit</button>
+                        <button className='btn btn-danger'>Delete</button>
+                    </td>
+                </tr>
+            ))}
+        </table>
+        
+    </div>)
 }
 
 export default AdminStudent

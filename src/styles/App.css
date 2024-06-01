@@ -91,18 +91,10 @@ header .header-text {
   width: 500px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-<<<<<<< HEAD:src/App.css
-  
-} */
-
-/* form:hover {
-  background-color: #f1f1f1;
-=======
 }
 
 form:hover {
   background-color: #f1f1f1f3;
->>>>>>> fe11ceaa601d370cb2cdeb25595a0ffc93d6d3c3:src/styles/App.css
 }
 
 input.input-field {
