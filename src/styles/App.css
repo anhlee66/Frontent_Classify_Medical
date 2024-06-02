@@ -113,7 +113,7 @@ html {
   justify-content: center;
 }
 
-.form-images {
+form {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -132,7 +132,7 @@ html {
 
 input.input-field {
   display: none;
-}
+} */
 
 .uploaded-row {
   display: flex;
@@ -243,8 +243,8 @@ input.input-field {
 .selected-image {
   width: 100%;
 }
-
-/* Layout Styles */
+/* 
+Layout Styles
 .container {
   display: flex;
   flex-wrap: wrap;
@@ -273,6 +273,14 @@ input.input-field {
   transition: background-color 0.3s ease;
 }
 
+<<<<<<< HEAD:src/App.css
+.container .right-panel {
+  flex: 1;
+  max-width: 150px;
+  padding-left: 20px;
+} 
+=======
+>>>>>>> fe11ceaa601d370cb2cdeb25595a0ffc93d6d3c3:src/styles/App.css
 
 /* CSS for the scrollable image list */
 .left-panel {
