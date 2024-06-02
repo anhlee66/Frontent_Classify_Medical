@@ -242,21 +242,21 @@ input.input-field {
 .selected-image {
   width: 100%;
 }
-/* 
+
 Layout Styles
-.container {
+/* .container {
   display: flex;
   flex-wrap: wrap;
   padding-top: 20px;
   border: 2px solid red;
-}
+} */
 
 .container .left-panel {
   max-width: 100px;
   padding-right: 3rem;
   border: 2px solid gray;
 }
-*/
+
 .container .main-panel {
   display: flex;
   margin-top: 42px;
