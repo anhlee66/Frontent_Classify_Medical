@@ -6,7 +6,7 @@ import ImagePreview from './ImagePreview';
 
 const UploaderForm = ({ fileData, handleFileChange, handleFileUploadClick, handleFileRemove, uploadImage, uploadedFileName }) => (
     <div className="box-container">
-        <form onClick={handleFileUploadClick}>
+        <form className='form-images' onClick={handleFileUploadClick}>
             <input
                 type="file"
                 accept="image/*"
@@ -26,14 +26,14 @@ const UploaderForm = ({ fileData, handleFileChange, handleFileUploadClick, handl
             
         </form>
 
-        <section className="uploaded-row">
+        {/* <section className="uploaded-row">
             <AiFillFileImage color="#1475cf" />
             <span className="upload-content">
                 {fileData.fileName}
                 
             </span>
             <MdDelete onClick={handleFileRemove} className="delete-icon" />
-        </section>
+        </section> */}
 
         <button type="button" className="btn-upload" onClick={uploadImage}>
             Upload
