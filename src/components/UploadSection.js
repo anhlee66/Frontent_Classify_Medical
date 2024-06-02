@@ -84,7 +84,9 @@ const UploadSection = () => {
             />
             {response.map((value) =>(
                 <div>
-                {<img src={`data:image/jpeg;base64,${value.image_base64}`} alt="image" />}
+                {value.image_base64.map((image) =>(
+                    <img src={`data:image/jpeg;base64,${image['image']}`} alt="image" />
+                ))}
                 <div>
                     <p>class:{value.name}</p>
                     <p>Confidence: {value.confidence}</p>
