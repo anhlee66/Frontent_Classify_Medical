@@ -26,14 +26,14 @@ const UploaderForm = ({ fileData, handleFileChange, handleFileUploadClick, handl
             
         </form>
 
-        <section className="uploaded-row">
+        {/* <section className="uploaded-row">
             <AiFillFileImage color="#1475cf" />
             <span className="upload-content">
                 {fileData.fileName}
                 
             </span>
             <MdDelete onClick={handleFileRemove} className="delete-icon" />
-        </section>
+        </section> */}
 
         <button type="button" className="btn-upload" onClick={uploadImage}>
             Upload
