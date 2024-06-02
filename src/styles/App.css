@@ -121,7 +121,7 @@ form {
   border: 2px dashed #1475cf;
   border-radius: 5px;
   height: 300px;
-  width: 500px;
+  width: 400px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
@@ -222,7 +222,6 @@ input.input-field {
 .upload-folder {
   position: relative;
   margin-right: auto;
-  border: 2px solid yellow;
 }
 
 .image-list {
@@ -257,30 +256,24 @@ Layout Styles
   padding-right: 3rem;
   border: 2px solid gray;
 }
-
+*/
 .container .main-panel {
-  display: grid;
-  top: 117px;
-  left: 231px;
+  display: flex;
+  margin-top: 42px;
+  margin-left: 203px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   border: 2px dashed #1475cf;
   border-radius: 5px;
   height: 300px;
-  width: 500px;
+  width: 400px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-<<<<<<< HEAD:src/App.css
-.container .right-panel {
-  flex: 1;
-  max-width: 150px;
-  padding-left: 20px;
-} 
-=======
->>>>>>> fe11ceaa601d370cb2cdeb25595a0ffc93d6d3c3:src/styles/App.css
+
+
 
 /* CSS for the scrollable image list */
 .left-panel {

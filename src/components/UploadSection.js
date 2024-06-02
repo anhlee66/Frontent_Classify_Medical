@@ -81,10 +81,11 @@ const UploadSection = () => {
                 handleFileRemove={handleFileRemove}
                 uploadImage={uploadImage}
                 uploadedFileName={uploadedFileName}
+                width={300} height={300}
             />
             {response.map((value) =>(
                 <div>
-                {<img src={`data:image/jpeg;base64,${value.image_base64}`} alt="image" />}
+                {<img width={300} height={300} src={`data:image/jpeg;base64,${value.image_base64}`} alt="image" />}
                 <div>
                     <p>class:{value.name}</p>
                     <p>Confidence: {value.confidence}</p>
