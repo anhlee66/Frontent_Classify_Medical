@@ -81,7 +81,7 @@ html {
   flex: 1;
   margin: auto;
   display: flex;
-  padding-left: clamp(400px, 2vw, 100px);
+  /* padding-left: clamp(400px, 2vw, 100px); */
   color: white;
 }
 
@@ -239,7 +239,7 @@ div:has(> .image-list){
 }
 
 .image-list-container .image-list {
-  max-width: 150px;
+  max-width: 200px;
   padding-right: 3rem;
 }
 
@@ -384,4 +384,9 @@ Layout Styles
   border: 2px solid #0074bc;
   border-radius: 15px;
 
+}
+
+.show-password{
+  flex:1;
+  justify-content: left;
 }

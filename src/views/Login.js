@@ -35,7 +35,7 @@ const Login = () => {
     return (
         <div className='form-container'>
             <form onSubmit={Auth} >
-                <h3>Login Now</h3>
+                <h3>Đăng nhập</h3>
                 <div className='form-group'>
                     <input
                         type='text'
@@ -59,8 +59,13 @@ const Login = () => {
                     }}
                 />
                 <p className='msg-error'>{msg}</p>
-                <button className='btn btn-primary form-control'>Login</button>
-                <p>don't have an account? <a href="/register">register now</a></p>
+                <div className='show-password'>
+                    <input type="checkbox" name="show" />
+                    <label htmlFor='show'>Hiện mật khẩu</label>
+                </div>
+
+                <button className='btn btn-primary form-control p-3 '>Đăng nhập</button>
+                <p>Bạn chưa có tài khoản? <a href="/register">Đăng ký ngay</a></p>
             </form>
         </div>
     )
