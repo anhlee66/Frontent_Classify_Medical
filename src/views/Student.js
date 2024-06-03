@@ -7,6 +7,8 @@ import AnimatedArrow from '../utils/Animated'
 import { FaElementor } from 'react-icons/fa';
 import makeService from '../services/model'
 import Header from '../components/Header'
+import { wait } from '@testing-library/user-event/dist/utils';
+import data from '../data'
 
 const UploadSection = () => {
     const [fileData, setFileData] = useState([]);
@@ -56,10 +58,11 @@ const UploadSection = () => {
     };
 
     const handleImageClick = async (image, index) => {
-        setSelectedImage(image);
         setSimilar([])
         setLoading(true)
         const file = fileData[index]
+        setSelectedImage(file);
+
         console.log('Image: ', file);
         setUploadedFileName(file.fileName);
         const formData = new FormData()
@@ -83,6 +86,21 @@ const UploadSection = () => {
         const btn = document.querySelector('#open-image')
         btn.click()
     }
+    const GetMore = async () => {
+        const formData = new FormData()
+        formData.append("image", response[0]['image_name'])
+        formData.append("name", response[0]['name'])
+        formData.append("start", response.length)
+        formData.append("end", response.length + 5)
+        
+        const res = await fetch("/api/model/image", { method: "POST", body: formData }).then(res => res.json())
+        console.log(res['data'])
+        setSimilar([...similar, ...res['data']])
+    }
+    const LoadJson = async () =>{
+       
+        console.log(data)
+    }
 
     return (
         <>
@@ -93,10 +111,11 @@ const UploadSection = () => {
                         onClick={OpenImageClick}
                     >
                         <form>
-                            Add Image
-                            <input id="open-image" className='btn btn-primary fs-4 ' type='file' hidden multiple onChange={handleFileChange} accept='image/*'/>
+                            <span>Thêm ảnh</span>
+                            <input id="open-image" className='btn btn-primary fs-4 ' type='file' hidden multiple onChange={handleFileChange} accept='image/*' />
                         </form>
                     </div>
+
                     <ImageList images={fileData} onImageClick={handleImageClick} />
                 </div>
                 <div className='container'>
@@ -106,23 +125,27 @@ const UploadSection = () => {
                     ) : (
                         <>
                             <div>
-                                {selectedImage && <img className='selected-image' src={selectedImage} alt='selected image' />}
+                                {selectedImage && <img className='selected-image' src={selectedImage.src} alt='selected image' />}
                             </div>
-                            {response.map((value) => (
-                                <div className='response'>
-                                    <p><b>class: </b>{value.name}</p>
-                                    <p><b>Confidence: </b>{value.confidence}</p>
-                                    <p><b>Information: </b>Step1:We will first import the Google fonts into our Lorem ipsum project; since we will be using various font styles in our project, we will also load fresh Google fonts into the CSS. We'll predefine every hue and font style we need for our project using the root selector. We will then use all the hues we need inside our project by using the pseudo...</p>
+                            {response.map((value, index) => (
+                                <div className='response' key={index}>
+                                    <p><b>Tên loại bệnh: </b>{data[value.name].name} ({value.name})</p>
+                                    <p><b>Độ chính xác: </b>{parseInt(value.confidence *100)} %</p>
+                                    <p><b>Thông tin: </b>{data[value.name].information}/</p>
                                 </div>))}
 
                             <div >
-                                <div><b>List image similar</b></div>
+                                {similar.length > 0 && (
+                                    <div><b>Hình ảnh tương tự</b></div>)
+                                }
                                 <div className='response-image'>
-                                    {similar.map((value) => (
-                                        <img className='image-similar' src={`data:image/jpeg;base64,${value['image']}`} alt="image" />
+                                    {similar.map((value, index) => (
+                                        <>
+                                            <img key={index} className='image-similar' src={`data:image/jpeg;base64,${value['image']}`} alt="image" />
+                                        </>
                                     ))}
                                 </div>
-                                <div className='more-image'>View more image</div>
+                                {similar.length > 0 && <div className='more-image' onClick={GetMore}>Xem thêm</div>}
 
                             </div>
 

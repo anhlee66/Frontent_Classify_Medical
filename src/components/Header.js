@@ -19,7 +19,7 @@ const Header = () => {
                 <img className='logo' src={logo} alt="Logo" />
                 <div className='header-text'>HỆ THỐNG NHẬN DIỆN HÌNH ẢNH Y KHOA</div>
                 {/* <p><a href='/login'>Login</a>|<a href='/register'>Register</a></p> */}
-                <button className='btn btn-secondary' onClick={onLogout}>Logout</button>
+                <button className='btn btn-secondary logout' onClick={onLogout}>Đăng xuất</button>
             </div>
         </header>
     )

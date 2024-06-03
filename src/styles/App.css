@@ -65,7 +65,8 @@ html {
   font-weight: bold;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  /* justify-content: space-between; */
 }
 
 .header img {
@@ -77,8 +78,9 @@ html {
   max-width: calc(100% - 20px);
   z-index: 1;
 }
-.header .header-text {
+.header-text {
   flex: 1;
+  margin: auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -98,6 +100,9 @@ html {
 
 .header .flex p a:hover {
   text-decoration: underline;
+}
+.logout{
+  float: right;
 }
 
 /* Form Styles */
@@ -253,8 +258,8 @@ div:has(> .selected-image){
   float: left;
 }
 .selected-image {
-  width: 300px;
-  height: 300px;
+  width: 250px;
+  height: auto;
   border: #0074bc solid 3px;
   border-radius: 30px;
   margin-right: 20px;
