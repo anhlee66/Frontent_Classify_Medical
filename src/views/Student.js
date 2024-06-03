@@ -89,12 +89,12 @@ const UploadSection = () => {
             <Header />
             <main>
                 <div>
-                    <div className='d-flex justify-content-center btn btn-primary fs-4 '
+                    <div className='d-flex justify-content-center btn-upload '
                         onClick={OpenImageClick}
                     >
                         <form>
                             Add Image
-                            <input id="open-image" className='btn btn-primary fs-4 ' type='file' hidden multiple onChange={handleFileChange} accept='image/*'/>
+                            <input id="open-image" className='btn-upload ' type='file' hidden multiple onChange={handleFileChange} accept='image/*'/>
                         </form>
                     </div>
                     <ImageList images={fileData} onImageClick={handleImageClick} />
