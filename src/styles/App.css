@@ -57,7 +57,6 @@ html {
 /* Header Styles */
 .header {
   width: 100%;
-  max-height: 100px;
   background-color: #0066cc;
   color: black;
   padding: 5px 0;
@@ -82,16 +81,13 @@ html {
   flex: 1;
   margin: auto;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-left: clamp(30px, 5vw, 100px);
+  padding-left: clamp(400px, 2vw, 100px);
   color: white;
 }
 
 .header .flex p {
   font-size: 2rem;
   color: var(--light-color);
-  margin-left: 1000px;
 }
 
 .header .flex p a {
@@ -203,6 +199,7 @@ input.input-field {
 
 .btn-upload,
 .btn-directory {
+  font-size: medium;
   padding: 10px 20px;
   background-color: #1475cf;
   color: white;
@@ -230,23 +227,31 @@ input.input-field {
   position: relative;
   margin-right: auto;
 }
-
+/* 
 div:has(> .image-list){
   height: 500px;
-}
-.image-list {
+} */
+
+.image-list-container {
   display: flex;
-  flex-direction: column;
-  overflow-y: scroll ;
-  overflow-x: hidden;
-  padding: 10px;
-  
+  flex-wrap: wrap;
+  padding-top: 20px;
 }
 
-.image-thumbnail {
-  width: 100%;
-  cursor: pointer;
+.image-list-container .image-list {
+  max-width: 150px;
+  padding-right: 3rem;
+}
+
+.image-list {
+  max-height: 500px;
+  overflow-x: hidden;
+}
+
+.image-list img {
   margin-bottom: 10px;
+  width: 100%;
+  object-fit: cover;
 }
 
 .image-preview {
@@ -257,6 +262,7 @@ div:has(> .image-list){
 div:has(> .selected-image){
   float: left;
 }
+
 .selected-image {
   width: 250px;
   height: auto;

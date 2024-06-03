@@ -107,7 +107,7 @@ const UploadSection = () => {
             <Header />
             <main>
                 <div>
-                    <div className='d-flex justify-content-center btn btn-primary fs-4 '
+                    <div className='d-flex justify-content-center btn-upload '
                         onClick={OpenImageClick}
                     >
                         <form>
