@@ -7,17 +7,16 @@ import Admin from './views/Admin';
 import Student from './views/Student';
 import officer from './views/Officer';
 import Register from './views/Register';
-import UploadSection from './components/UploadSection';
-
+import Home from './views/Home'
 
 function App(){
     return (
         <BrowserRouter>
             <Routes>
-                {/* <Route path="/" Component={Home}/> */}
+                <Route path="/" Component={Home}/>
                 <Route path='/login' Component={Login}/>
                 <Route path='/admin/dashboard' Component={Admin} />
-                <Route path='/student' Component={UploadSection} />
+                <Route path='/student' Component={Student} />
                 <Route path='/officer' Component={officer} /> 
                 <Route path='/register/' Component={Register} />
             </Routes>

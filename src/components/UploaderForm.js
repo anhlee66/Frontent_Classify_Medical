@@ -15,7 +15,7 @@ const UploaderForm = ({ fileData, handleFileChange, handleFileUploadClick, handl
                 onChange={handleFileChange}
             />
             {fileData.image ? (
-                <img src={fileData.image} width={300} height={300} alt={fileData.fileName} />
+                <img src={fileData.image} width={300} height={300} alt={fileData.fileName} hidden />
             ) : (
                 <>
                     <MdCloudUpload color="#1475cf" size={60} />

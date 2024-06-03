@@ -83,6 +83,7 @@ html {
   align-items: center;
   justify-content: center;
   padding-left: clamp(30px, 5vw, 100px);
+  color: white;
 }
 
 .header .flex p {
@@ -112,7 +113,7 @@ html {
   gap: 1.5rem;
   justify-content: center;
 }
-
+/* 
 form {
   display: flex;
   flex-direction: column;
@@ -124,11 +125,12 @@ form {
   width: 400px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-}
+} */
 
-.form-images:hover {
+
+/* .form-images:hover {
   background-color: #f1f1f1f3;
-}
+} */
 
 input.input-field {
   display: none;
@@ -224,8 +226,16 @@ input.input-field {
   margin-right: auto;
 }
 
+div:has(> .image-list){
+  height: 500px;
+}
 .image-list {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll ;
+  overflow-x: hidden;
   padding: 10px;
+  
 }
 
 .image-thumbnail {
@@ -239,10 +249,74 @@ input.input-field {
   padding: 10px;
 }
 
+div:has(> .selected-image){
+  float: left;
+}
 .selected-image {
-  width: 100%;
+  width: 300px;
+  height: 300px;
+  border: #0074bc solid 3px;
+  border-radius: 30px;
+  margin-right: 20px;
+  cursor: pointer;
+}
+.response{
+  font-size: medium;
+  margin: 10px;
+  padding-left: 20px;
 }
 
+div:has(> .response-image){
+  padding-top: 20px;
+  clear: both;
+  font-size: medium;
+}
+.response-image{
+  display: flex;
+  flex-direction: row;
+  overflow-y: scroll;
+  width: 100%;
+  padding-top:10px;
+}
+
+
+.image-similar{
+  float: left;
+  width: 20%;
+  height: auto;
+  cursor: pointer;
+  padding-right: 5px;
+}
+
+.spinner {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+  position: relative;
+  /* left: 50%;
+  top:50%; */
+  margin: auto;
+  
+}
+.more-image{
+  color: #3498db;
+  text-align: center;
+  cursor: pointer;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none;
+}
+.more-image:hover{
+  text-decoration: underline;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 Layout Styles
 /* .container {
   display: flex;
