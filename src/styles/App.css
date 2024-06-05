@@ -54,52 +54,8 @@ html {
   overflow-x: hidden;
 }
 
-/* Header Styles */
-.header {
-  width: 100%;
-  background-color: #0066cc;
-  color: black;
-  padding: 5px 0;
-  font-size: 5vh;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* justify-content: space-between; */
-}
 
-.header img {
-  position: absolute;
-  left: clamp(10px, 2vw, 40px); 
-  top: clamp(5px, 1vh, 20px);
-  width: clamp(30px, 5vw, 80px); 
-  height: auto; 
-  max-width: calc(100% - 20px);
-  z-index: 1;
-}
-.header-text {
-  flex: 1;
-  margin: auto;
-  display: flex;
-  /* padding-left: clamp(400px, 2vw, 100px); */
-  color: white;
-}
 
-.header .flex p {
-  font-size: 2rem;
-  color: var(--light-color);
-}
-
-.header .flex p a {
-  color: var(--cyan);
-}
-
-.header .flex p a:hover {
-  text-decoration: underline;
-}
-.logout{
-  float: right;
-}
 
 /* Form Styles */
 .box-container {
