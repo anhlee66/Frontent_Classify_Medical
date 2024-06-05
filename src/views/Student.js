@@ -6,7 +6,6 @@ import useDirectoryPicker from '../hooks/useDirectoryPicker';
 import AnimatedArrow from '../utils/Animated'
 import { FaElementor } from 'react-icons/fa';
 import makeService from '../services/model'
-<<<<<<< Updated upstream
 import Header from '../components//Header/Header-student.tsx'
 import { wait } from '@testing-library/user-event/dist/utils';
 import data from '../data'

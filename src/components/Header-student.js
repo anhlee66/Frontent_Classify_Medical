@@ -15,11 +15,16 @@ const Header = () => {
     }
     return (
         <header className='header'>
+
+            <img className='logo' src={logo} alt="Logo" />
+
             <div className='flex'>
-                <img className='logo' src={logo} alt="Logo" />
                 <div className='header-text'>HỆ THỐNG NHẬN DIỆN HÌNH ẢNH Y KHOA</div>
                 {/* <p><a href='/login'>Login</a>|<a href='/register'>Register</a></p> */}
-                <button className='btn btn-secondary logout' onClick={onLogout}>Đăng xuất</button>
+            </div>
+            
+            <div className='navbar'>
+                <button className='btn btn-secondary' onClick={onLogout}>Logout</button>
             </div>
         </header>
     )
