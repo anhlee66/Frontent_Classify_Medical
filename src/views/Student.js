@@ -9,9 +9,7 @@ import makeService from '../services/model'
 import Header from '../components//Header/Header-student.tsx'
 import { wait } from '@testing-library/user-event/dist/utils';
 import data from '../data'
-=======
-import Header from '../components/Header-student'
->>>>>>> Stashed changes
+
 
 const UploadSection = () => {
     const [fileData, setFileData] = useState([]);
