@@ -3,10 +3,8 @@ import UploaderForm from '../components/UploaderForm';
 import ImageList from '../components/ImageList';
 import ImagePreview from '../components/ImagePreview';
 import useDirectoryPicker from '../hooks/useDirectoryPicker';
-import AnimatedArrow from '../utils/Animated'
-import { FaElementor } from 'react-icons/fa';
 import makeService from '../services/model'
-import Header from '../components//Header/Header-student.tsx'
+import Header from '../components//Header/Header-student'
 import { wait } from '@testing-library/user-event/dist/utils';
 import data from '../data'
 

@@ -85,7 +85,8 @@ const Register = () => {
                 <p className='msg-error' >{msg}</p>
                 <input type="submit" value="Register"  className='btn' />
             </form>
-        </div>)
+        </div>
+    )
 }
 
 export default Register

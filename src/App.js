@@ -8,6 +8,8 @@ import Student from './views/Student';
 import officer from './views/Officer';
 import Register from './views/Register';
 import Home from './views/Home'
+import Profile from './components/Profile';
+import { jwtDecode } from 'jwt-decode';
 
 function App(){
     return (
@@ -16,6 +18,7 @@ function App(){
                 <Route path="/" Component={Home}/>
                 <Route path='/login' Component={Login}/>
                 <Route path='/admin/dashboard' Component={Admin} />
+                <Route path='/profile' Component={<Profile token={jwtDecode} />}/>
                 <Route path='/student' Component={Student} />
                 <Route path='/officer' Component={officer} /> 
                 <Route path='/register/' Component={Register} />
