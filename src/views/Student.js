@@ -9,6 +9,7 @@ import { wait } from '@testing-library/user-event/dist/utils';
 import data from '../data'
 
 
+
 const UploadSection = () => {
     const [fileData, setFileData] = useState([]);
     const [uploadedFileName, setUploadedFileName] = useState(null);
@@ -106,13 +107,14 @@ const UploadSection = () => {
             <Header />
             <main>
                 <div>
-                    <div className='d-flex justify-content-center btn-upload '
+                    <div className='d-flex justify-content-center'
                         onClick={OpenImageClick}
-                    >
+                    ><div>
                         <form>
-                            <span>Thêm ảnh</span>
+                            <span className='btn-upload'>Thêm ảnh</span>
                             <input id="open-image" className='btn btn-primary fs-4 ' type='file' hidden multiple onChange={handleFileChange} accept='image/*' />
                         </form>
+                    </div>
                     </div>
 
                     <ImageList images={fileData} onImageClick={handleImageClick} />
