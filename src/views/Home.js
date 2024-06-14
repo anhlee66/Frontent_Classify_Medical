@@ -1,30 +1,32 @@
-import { useNavigate } from "react-router-dom"
-import Cookies from 'js-cookies'
-import { useEffect } from "react"
+import { useNavigate } from "react-router-dom";
+import Cookies from 'js-cookies';
+import { useEffect } from "react";
+
 function Home() {
-    const navigator = useNavigate()
+    const navigator = useNavigate();
 
     function redirect() {
-        const permission = Cookies.getItem("permission")
-        if (permission.match('student')) {
-            navigator('/student')
-        }
-        else if (permission.match('admin')) {
-            navigator('/admin/dashboard')
-        }
-        else {
-            navigator('/login')
+        const permission = Cookies.getItem("permission");
+        if (permission && permission.match('student')) {
+            navigator('/student');
+        } else if (permission && permission.match('admin')) {
+            navigator('/admin/dashboard');
+        } else {
+            navigator('/login');
         }
         
-        console.log("cookie", permission)
+        console.log("cookie", permission);
     }
 
-    // redirect()
+    useEffect(() => {
+        redirect();
+    }, []); // Dependency array to ensure it runs once after the component mounts
 
-    useEffect(() =>{
-        redirect()
-    })
-    // return (<><button className="btn btn-primary" onClick={navigator('/login')}>Navi</button></>)
+    return (
+        <>
+            <button className="btn btn-primary" onClick={() => navigator('/login')}>Navi</button>
+        </>
+    );
 }
 
-export default Home
+export default Home;

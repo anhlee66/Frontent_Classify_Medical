@@ -34,6 +34,7 @@ const Login = () => {
 
     return (
         <div className='form-container'>
+            <p className='msg-error'>{msg}</p>
             <form onSubmit={Auth} >
                 <h3>Đăng nhập</h3>
                 <div className='form-group'>
@@ -58,12 +59,6 @@ const Login = () => {
                         setMsg("")
                     }}
                 />
-                <p className='msg-error'>{msg}</p>
-                <div className='show-password'>
-                    <input type="checkbox" name="show" />
-                    <label htmlFor='show'>Hiện mật khẩu</label>
-                </div>
-
                 <button className='btn btn-primary form-control p-3 '>Đăng nhập</button>
                 <p>Bạn chưa có tài khoản? <a href="/register">Đăng ký ngay</a></p>
             </form>
