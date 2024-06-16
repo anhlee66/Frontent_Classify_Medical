@@ -128,7 +128,7 @@ const UploadSection = () => {
                             </div>
                             {response.map((value, index) => (
                                 <div className='response' key={index}>
-                                    <p><b>Tên loại bệnh: </b>{data[value.name].name} ({value.name})</p>
+                                    {/* <p><b>Tên loại bệnh: </b>{data[value.name].name} ({value.name})</p> */}
                                     <p><b>Độ chính xác: </b>{parseInt(value.confidence *100)} %</p>
                                     <p><b>Thông tin: </b>{data[value.name].information}/</p>
                                 </div>))}

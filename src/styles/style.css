@@ -132,45 +132,6 @@ html {
 .admin-header{
     font-size: medium;
 }
-.student-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.student{
-    width: 80%;
-    font-size: medium;
-    margin:30px;
-    
-}
-
-.student td, th{
-    border: #a29f9f solid 1px;
-    border-collapse: collapse;
-    padding-left: 10px;
-}
-
-
-.student th{
-    border: #a29f9f solid 1px;
-    border-collapse: collapse;
-    height:40px;
-    background-color:#04AA6D;
-    color:white;
-
-}
-.student tr:nth-child(even){
-    background-color: #dbd6d6;
-}
-.student td input{
-    background-color: inherit;
-}
-
-.action{
-    display:flex;
-    justify-content: center;
-    align-items: center;
-}
 
 
 .search-box{
@@ -179,10 +140,7 @@ html {
     
 }
 
-.btn-search{
-    background-color: #b1adad;
-    border-radius: 10px;
-}
+
 
 .active{
     color: blue;
@@ -234,7 +192,7 @@ html {
     border: 1px solid #070707;
 }
 
-.profile .avatar . .avatar-wrapper:hover button {
+.profile .avatar .avatar-wrapper:hover button {
     display: block;
 }
 
@@ -253,3 +211,17 @@ html {
     }
 }
 /* End */
+
+/* admin dashborad */
+
+
+
+.body {
+    /* clear: both; */
+}
+
+.sidebar{
+    float:left;
+    height: 100%;
+    width: 300px;
+}
