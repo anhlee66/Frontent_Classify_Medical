@@ -1,0 +1,347 @@
+.student-page{
+    display: flex;
+}
+
+.left-panel {
+    width: 400px;
+    height: 100%;
+    overflow-y: auto;
+    font-size: 17px;
+    /* border: 2px solid gray; */
+
+}
+
+.main-panel {
+    display: flex;
+    margin-top: 42px;
+    margin-left: 203px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #1475cf;
+    border-radius: 5px;
+    height: 300px;
+    width: 400px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+
+
+
+/* CSS for the scrollable image list */
+
+
+.btn-upload {
+    width: 100px;
+    height: 30px;
+    border-radius: 10px;
+    border: 1px solid #0b96cc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(252, 252, 252);
+    margin: 20px;
+    cursor: pointer;
+}
+.btn-upload:hover{
+    background-color: #6ac8ed;
+}
+.btn-upload button{
+    background-color: transparent;
+}
+.image-list-container {
+    display: flex;
+    /* flex-wrap: wrap; */
+    padding:10px;
+    justify-content: center;
+}
+
+
+
+.image-list {
+    max-height: 500px;
+    overflow-x: hidden;
+}
+
+.image-list img {
+    margin-bottom: 10px;
+    width: 80%;
+    height: auto;
+    object-fit: cover;
+}
+
+.image-preview {
+    flex: 1;
+    padding: 10px;
+}
+
+div:has(> .selected-image) {
+    float: left;
+}
+
+.selected-image {
+    width: 250px;
+    height: auto;
+    border: #0074bc solid 3px;
+    border-radius: 30px;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.response {
+    font-size: medium;
+    margin: 10px;
+    padding-left: 20px;
+}
+
+div:has(> .response-image) {
+    padding-top: 20px;
+    clear: both;
+    font-size: medium;
+}
+
+.response-image {
+    display: flex;
+    flex-direction: row;
+    overflow-y: scroll;
+    width: 100%;
+    padding-top: 10px;
+}
+
+
+.image-similar {
+    float: left;
+    width: 20%;
+    height: auto;
+    cursor: pointer;
+    padding-right: 5px;
+}
+
+.spinner {
+    border: 10px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 10px solid #6f7274;
+    width: 40px;
+    height: 40px;
+    animation: spin 2s linear infinite;
+    position: relative;
+    /* left: 50%;
+    top:50%; */
+    margin: auto;
+
+}
+
+.more-image {
+    color: #3498db;
+    text-align: center;
+    cursor: pointer;
+    -webkit-user-select: none;
+    /* Safari */
+    -ms-user-select: none;
+    /* IE 10 and IE 11 */
+    user-select: none;
+}
+
+.more-image:hover {
+    text-decoration: underline;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+Layout Styles
+/* .container {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 20px;
+    border: 2px solid red;
+  } */
+
+
+.image-list {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 100%;
+}
+
+.image-thumbnail {
+    width: 120px;
+    height: 120px;
+    /* object-fit: cover; */
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.image-thumbnail:hover {
+    border: 2px solid #0074bc;
+    border-radius: 15px;
+
+}
+
+.show-password {
+    flex: 1;
+    justify-content: left;
+}
+
+.like-status{
+    font-size: 30px;
+    padding: 5px;
+    display: flex;
+    justify-content: space-around;
+    cursor: pointer;
+}
+.like{
+    color: #0b96cc;
+}
+
+.dislike{
+    color: rgb(223, 37, 37);
+}
+
+.btn-control{
+    font-size: 19px;
+    margin: 15px;
+    display: flex;
+    justify-content: right;
+}
+.btn-control button{
+    border: 1px solid #0074bc;
+    border-radius:15px;
+    padding:3px 15px;
+    margin: 5px 15px;
+    cursor: pointer;
+    user-select: none;
+}
+.btn-view{
+    background-color: #f2eded;
+}
+.btn-view:hover{
+    background-color: #b0d6ee;
+}
+.btn-control .btn-question{
+    border: 1px solid rgb(40, 180, 119);
+}
+.btn-question:hover{
+    background-color: rgb(150, 224, 193);
+}
+.hidden-detail{
+    font-size: 17px;
+    color: #0b96cc;
+    cursor: pointer;
+    text-align: center;
+    user-select: none;
+}
+.hidden-detail:hover{
+    /* border-bottom: 1px solid #0b96cc; */
+    color: #1475cf;
+    /* background-color: #0074bc; */
+}
+.question-container{
+    height: 400px;
+    width: 800px;
+    box-shadow: 0 2px 4px #abaeb1;
+    position: fixed;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 1;
+    top:0;
+    bottom: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+    background-color: #ededed;
+    border-radius: 20px;
+}
+.question-header{
+    background-color: #0b96cc;
+    border-radius: inherit;
+    padding: 10px;
+    font-size: 20px;
+    color:white;
+    text-align: center;
+}
+
+.question-container img{
+    width: 200px;
+    height: 200px;
+    border-radius: 20px;
+    margin: 15px;
+}
+
+.question-container .question-main{
+    display: flex;
+    flex: 1;
+    padding: 10px;
+    height: max-content;
+}
+.question-main form{
+    flex:1
+}
+.question-main textarea{
+    width: 90%;
+    height: 200px;
+    margin: 15px;
+    border-radius: 10px;
+    font-size: 16px;
+    padding: 10px;
+}
+.question-main .form-group{
+    padding: 10px;
+    display: flex;
+}
+.form-group input{
+    font-size: 15px;
+    padding: 0 10px;
+    border-radius: 10px;
+    border: 1px solid #0074bc;
+    margin: 5px 10px;
+}
+.form-group input:hover{
+    background-color: #b5d1e2;
+}
+
+.notification-container{
+    position: fixed;
+    top: 140px;
+    right: 70px;
+    width: 250px;
+    height: auto;
+    overflow-y: auto;
+    border: 1px solid #d2e2ec;
+    border-radius: 15px;
+    z-index: 1;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px #535050;
+    padding: 15px 0;
+    user-select: none;
+
+}
+
+.notification-item{
+    border-bottom: 1px solid #bdbfc0;
+    cursor: pointer;
+    padding: 0 10px;
+}
+.notification-item p{
+    margin: 0;
+}
+.notification-item .item-title{
+    color: #1475cf;
+}
+.notification-item .item-author{
+    text-align: right;
+    color:#8f9192;
+    font-style: italic;
+}
+.notification-item:hover{
+    background-color: #d5e0e4;
+}

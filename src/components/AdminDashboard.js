@@ -42,7 +42,7 @@ const AdminDashboard = () => {
         }
     }
     const getActiveModel = async () => {
-        const url = "/api/model/get_active_model"
+        const url = "/api/model/active"
         await fetch(url, { method: "GET" })
             .then(res => res.json())
             .then(data => setActive(data))
@@ -51,7 +51,7 @@ const AdminDashboard = () => {
 
     }
     const getAllModel = async () => {
-        const url = "/api/model/get_all_model"
+        const url = "/api/model/all"
         return await fetch(url, { method: "GET" })
             .then(res => {
                 if (res.ok) {
@@ -76,7 +76,7 @@ const AdminDashboard = () => {
 
     }
     const getNewUser = async () => {
-        const url = "/api/user/get_new"
+        const url = "/api/user/recent"
         await fetch(url, { method: "GET" })
             .then(res => {
                 if (res.ok) {
@@ -216,7 +216,7 @@ const AdminDashboard = () => {
                             </tr>
                         </thead>
                         {newUsers && newUsers.map((value, index) => (
-                            <tbody>
+                            <tbody key={index}>
                                 <tr>
                                     <td>{value.name}</td>
                                     <td>{value.email}</td>

@@ -16,7 +16,7 @@
 
 *::-webkit-scrollbar {
     height: .5rem;
-    width: 1rem;
+    width: 0.5rem;
 }
 
 *::-webkit-scrollbar-track {
@@ -28,7 +28,7 @@
 }
 
 html {
-    font-size: 62.5%;
+    /* font-size: 62.5%; */
     overflow-x: hidden;
 }
 
@@ -54,11 +54,12 @@ html {
     align-items: center;
     justify-content: center;
     padding: 2rem;
+    font-size: 15px;
 }
 
 .form-container form {
     padding: 2rem;
-    width: 50rem;
+    width: 40rem;
     border-radius: .5rem;
     box-shadow: var(--box-shadow);
     /* border: var(--border); */
@@ -70,14 +71,14 @@ html {
     display: block;
     width: 100%;
     padding: rem 1.4rem;
-    font-size: 1.8rem;
+    font-size: 1rem;
     margin: .5rem 0;
     text-align: left;
 }
 
 .form-container form p {
     padding-top: 1.5rem;
-    font-size: 2rem;
+    font-size: 19px;
     color: var(--black);
 }
 
@@ -97,7 +98,7 @@ html {
     width: 100%;
     border-radius: .5rem;
     background-color: var(--light-bg);
-    padding: 1.2rem 1.4rem;
+    padding: 1rem 1.4rem;
     font-size: 1.8rem;
     color: var(--black);
     border: var(--border);
@@ -110,18 +111,18 @@ html {
 
 .btn {
     display: inline-block;
-    margin-top: 1rem;
-    padding: 1rem 3rem;
+    margin-top: 10px;
+    padding: 5px 5px;
     cursor: pointer;
     color: var(--white);
     font-size: 1.8rem;
     border-radius: .5rem;
     text-transform: capitalize;
-    background-color: var(--cyan);
+    background-color: rgb(39, 116, 249)
 }
 
 .btn:hover {
-    background-color: blue;
+    background-color: rgb(23, 23, 224);
 }
 
 .msg-error{

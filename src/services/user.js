@@ -40,7 +40,7 @@ function makeService(){
     }
 
     async function get_current_user(){
-        const url = "/api/user/get_current_user"
+        const url = "/api/user/current"
         const option = {
             header:header,
             method:"GET"
@@ -75,7 +75,7 @@ function makeService(){
     }
 
     async function get_all_user(user_type){
-        const url = `/api/user/get_all_user/${user_type}`
+        const url = `/api/user/${user_type}/all`
         const option = {
             Headers:header,
             method:"GET",
@@ -89,7 +89,7 @@ function makeService(){
     const formData = new FormData(form)
     */
     async function change_password(form){
-        const url = "/api/user/change_password"
+        const url = "/api/user/password/change"
        
         const option ={
             method:"POST",

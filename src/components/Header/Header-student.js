@@ -71,7 +71,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const Header = () => {
+const Header = ({onNotifyClick}) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const [drawerState, setDrawerState] = useState({
@@ -266,6 +266,8 @@ const Header = () => {
                 size="large"
                 aria-label="show 17 new notifications"
                 color="inherit"
+                onClick={onNotifyClick}
+                id="icon-notify"
               >
                 <Badge badgeContent={17} color="error">
                   <NotificationsIcon />

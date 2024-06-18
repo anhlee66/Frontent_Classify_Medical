@@ -18,7 +18,7 @@ const ActiveModel = ({ model=null,refresh }) => {
         // console.log(active)
     }
     const onChangeActive =  async() => {
-        const url = "/api/model/change_active"
+        const url = "/api/model/active/change"
         const id= model[active].id
         // console.log(id)
         const formData = new FormData()

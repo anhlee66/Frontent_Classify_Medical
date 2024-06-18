@@ -6,16 +6,11 @@ import { faBars, faBell } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css"
 import user from "../../assets/fontawesome/svgs/regular/user.svg"
-import { useScrollTrigger } from "@mui/material"
-import { useEffect, useState } from "react"
-function AdminHeader({ username, avatar, onShowProfileBar }) {
+function OfficerHeader({ username, avatar, onShowProfileBar }) {
     const navigate = useNavigate()
-    const [user,setUser] = useState(null)
     const onBranchCLick = () => {
-        navigate("/admin/dashboard")
+        navigate("/officer")
     }
-    
-   
     return (
         <div className="admin-header">
             <div className="header-menu">
@@ -40,4 +35,4 @@ function AdminHeader({ username, avatar, onShowProfileBar }) {
     )
 }
 
-export default AdminHeader
+export default OfficerHeader
