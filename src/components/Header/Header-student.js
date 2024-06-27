@@ -1,85 +1,118 @@
-import React, { useState } from 'react';
-import logo from '../../assets/logo.gif';
-import makeService from '../../services/user';
+import React, { useState, useEffect } from "react";
+import logo from "../../assets/logo.gif";
+import makeService from "../../services/user";
 import { useNavigate } from "react-router-dom";
-import './header.css';
-import { styled, alpha } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import InputBase from '@mui/material/InputBase';
-import Badge from '@mui/material/Badge';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import MoreIcon from '@mui/icons-material/MoreVert';
-import Tooltip from '@mui/material/Tooltip';
-import Avatar from '@mui/material/Avatar';
+import "./header.css";
+import { styled, alpha } from "@mui/material/styles";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import InputBase from "@mui/material/InputBase";
+import Badge from "@mui/material/Badge";
+import MenuItem from "@mui/material/MenuItem";
+import Menu from "@mui/material/Menu";
+import SwipeableDrawer from "@mui/material/SwipeableDrawer";
+import List from "@mui/material/List";
+import Divider from "@mui/material/Divider";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import MailIcon from "@mui/icons-material/Mail";
+import MenuIcon from "@mui/icons-material/Menu";
+import SearchIcon from "@mui/icons-material/Search";
+import DeleteIcon from "@mui/icons-material/Delete";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import MoreIcon from "@mui/icons-material/MoreVert";
+import Tooltip from "@mui/material/Tooltip";
+import Avatar from "@mui/material/Avatar";
+import CardHeader from "@mui/material/CardHeader";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import Collapse from "@mui/material/Collapse";
+import CardContent from "@mui/material/CardContent";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Button from "@mui/material/Button";
+import Alert from "@mui/material/Alert";
+import axios from "axios";
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
+const Search = styled("div")(({ theme }) => ({
+  position: "relative",
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
+  "&:hover": {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
   marginRight: theme.spacing(2),
   marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
+  width: "100%",
+  [theme.breakpoints.up("sm")]: {
     marginLeft: theme.spacing(3),
-    width: 'auto',
+    width: "auto",
   },
 }));
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
+const SearchIconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
+  height: "100%",
+  position: "absolute",
+  pointerEvents: "none",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
+  color: "inherit",
+  "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("md")]: {
+      width: "20ch",
     },
   },
 }));
 
-const Header = ({onNotifyClick}) => {
+const ExpandMore = styled((props) => {
+  const { expand, ...other } = props;
+  return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
+  marginLeft: "auto",
+  transition: theme.transitions.create("transform", {
+    duration: theme.transitions.duration.shortest,
+  }),
+}));
+
+const Header = ({ onNotifyClick }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const [drawerState, setDrawerState] = useState({
     left: false,
   });
 
+  const [searchQuery, setSearchQuery] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
+
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  const [expanded, setExpanded] = React.useState(false);
+
+  const [searchResults, setSearchResults] = useState([]);
+  const [selectedDiseaseIndex, setSelectedDiseaseIndex] = useState(0);
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
@@ -97,8 +130,8 @@ const Header = ({onNotifyClick}) => {
   const toggleDrawer = (anchor, open) => (event) => {
     if (
       event &&
-      event.type === 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
     ) {
       return;
     }
@@ -108,13 +141,13 @@ const Header = ({onNotifyClick}) => {
 
   const drawerList = (anchor) => (
     <Box
-      sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
+      sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
               <ListItemIcon>
@@ -127,7 +160,7 @@ const Header = ({onNotifyClick}) => {
       </List>
       <Divider />
       <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
+        {["All mail", "Trash", "Spam"].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
               <ListItemIcon>
@@ -141,19 +174,19 @@ const Header = ({onNotifyClick}) => {
     </Box>
   );
 
-  const menuId = 'primary-search-account-menu';
+  const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
       anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       id={menuId}
       keepMounted
       transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       open={isMenuOpen}
       onClose={handleMenuClose}
@@ -163,19 +196,19 @@ const Header = ({onNotifyClick}) => {
     </Menu>
   );
 
-  const mobileMenuId = 'primary-search-account-menu-mobile';
+  const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
       anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       id={mobileMenuId}
       keepMounted
       transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
@@ -219,17 +252,80 @@ const Header = ({onNotifyClick}) => {
     // console.log(res)
 
     if (res.success) {
-      navigator('/login');
+      navigator("/login");
     }
   }
 
+  useEffect(() => {
+    if (errorMessage) {
+      const timer = setTimeout(() => {
+        setErrorMessage("");
+      }, 2000); // 2 seconds
+      return () => clearTimeout(timer);
+    }
+  }, [errorMessage]);
+
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const extractVietnameseName = (label) => {
+    const match = label.match(/\(([^)]+)\)/);
+    return match ? match[1] : label;
+  };
+
+  const handleSearchKeyDown = async (event) => {
+    if (event.key === "Enter") {
+      try {
+        const response = await axios.get(
+          `http://127.0.0.1:8000/api/disease/search?query=${searchQuery}`
+        );
+        setSearchResults(response.data);
+        setSelectedDiseaseIndex(0);
+        setErrorMessage("");
+      } catch (error) {
+        if (error.response && error.response.status === 404) {
+          setErrorMessage("No diseases found with that name");
+          setSearchResults(""); // Clear previous disease info if not found
+        } else {
+          console.error("Error fetching disease information:", error);
+          setErrorMessage(
+            "An error occurred while fetching disease information."
+          );
+          setSearchResults("");
+        }
+      }
+    }
+  };
+
+  const onDeleteClick = () => {
+    setSearchQuery("");
+    setSearchResults("");
+  };
+
+  const handlePreviousClick = () => {
+    setSelectedDiseaseIndex((prevIndex) =>
+      prevIndex > 0 ? prevIndex - 1 : prevIndex
+    );
+  };
+
+  const handleNextClick = () => {
+    setSelectedDiseaseIndex((prevIndex) =>
+      prevIndex < searchResults.length - 1 ? prevIndex + 1 : prevIndex
+    );
+  };
+
+  const diseaseInfo = searchResults[selectedDiseaseIndex];
+
   return (
-    <header className='header'>
-      <div className='header-1'>
-        <div className='flex'>
-          <img className='logo' src={logo} alt="Logo" />
-          <div className='header-text'>HỆ THỐNG NHẬN DIỆN HÌNH ẢNH Y KHOA</div>
-          <button className='button-40' onClick={onLogout}>Đăng xuất</button>
+    <header className="header">
+      <div className="header-1">
+        <div className="flex">
+          <img className="logo" src={logo} alt="Logo" />
+          <div className="header-text">HỆ THỐNG NHẬN DIỆN HÌNH ẢNH Y KHOA</div>
+          <button className="button-40" onClick={onLogout}>
+            Đăng xuất
+          </button>
         </div>
       </div>
 
@@ -242,7 +338,7 @@ const Header = ({onNotifyClick}) => {
               color="inherit"
               aria-label="open drawer"
               sx={{ mr: 2 }}
-              onClick={toggleDrawer('left', true)}
+              onClick={toggleDrawer("left", true)}
             >
               <MenuIcon />
             </IconButton>
@@ -252,12 +348,22 @@ const Header = ({onNotifyClick}) => {
               </SearchIconWrapper>
               <StyledInputBase
                 placeholder="Search…"
-                inputProps={{ 'aria-label': 'search' }}
+                inputProps={{ "aria-label": "search" }}
+                value={searchQuery}
+                onChange={handleSearchChange}
+                onKeyDown={handleSearchKeyDown}
               />
+              <IconButton color="inherit" onClick={onDeleteClick}>
+                <DeleteIcon />
+              </IconButton>
             </Search>
             <Box sx={{ flexGrow: 1 }} />
-            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-              <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+            <Box sx={{ display: { xs: "none", md: "flex" } }}>
+              <IconButton
+                size="large"
+                aria-label="show 4 new mails"
+                color="inherit"
+              >
                 <Badge badgeContent={4} color="error">
                   <MailIcon />
                 </Badge>
@@ -281,17 +387,17 @@ const Header = ({onNotifyClick}) => {
               </IconButton>
             </Tooltip>
             <Menu
-              sx={{ mt: '45px' }}
+              sx={{ mt: "45px" }}
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
+                vertical: "top",
+                horizontal: "right",
               }}
               keepMounted
               transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
+                vertical: "top",
+                horizontal: "right",
               }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
@@ -302,7 +408,7 @@ const Header = ({onNotifyClick}) => {
                 </MenuItem>
               ))}
             </Menu>
-            <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+            <Box sx={{ display: { xs: "flex", md: "none" } }}>
               <IconButton
                 size="large"
                 aria-label="show more"
@@ -321,11 +427,112 @@ const Header = ({onNotifyClick}) => {
         <SwipeableDrawer
           anchor="left"
           open={drawerState.left}
-          onClose={toggleDrawer('left', false)}
-          onOpen={toggleDrawer('left', true)}
+          onClose={toggleDrawer("left", false)}
+          onOpen={toggleDrawer("left", true)}
         >
-          {drawerList('left')}
+          {drawerList("left")}
         </SwipeableDrawer>
+        {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
+        {diseaseInfo && (
+          <Box bgcolor="#efeff0" sx={{ padding: 2 }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {searchResults.length > 1 && (
+                <div
+                  style={{
+                    display: "flex",
+                    marginRight: 10,
+                    backgroundColor: "#d9d9d9",
+                    borderRadius: 5,
+                  }}
+                >
+                  <Button onClick={handlePreviousClick}>Previous</Button>
+                </div>
+              )}
+              <Card
+                sx={{
+                  display: "flex",
+                }}
+              >
+                <CardHeader
+                  title={diseaseInfo.name}
+                  subheader={extractVietnameseName(diseaseInfo.label)}
+                />
+                <CardActions disableSpacing>
+                  <ExpandMore
+                    expand={expanded}
+                    onClick={handleExpandClick}
+                    aria-expanded={expanded}
+                    aria-label="show more"
+                  >
+                    <ExpandMoreIcon />
+                  </ExpandMore>
+                </CardActions>
+                <Collapse in={expanded} timeout="auto" unmountOnExit>
+                  <CardContent>
+                    <Typography>Concept:</Typography>
+                    <Typography
+                      paragraph
+                      variant="body2"
+                      color="text.secondary"
+                    >
+                      {diseaseInfo.concept}
+                    </Typography>
+                    <Typography>Reason:</Typography>
+                    <Typography
+                      paragraph
+                      variant="body2"
+                      color="text.secondary"
+                    >
+                      {diseaseInfo.reason}
+                    </Typography>
+                    <Typography>Symptom:</Typography>
+                    <Typography
+                      paragraph
+                      variant="body2"
+                      color="text.secondary"
+                    >
+                      {diseaseInfo.symptom}
+                    </Typography>
+                    <Typography>Consequence:</Typography>
+                    <Typography
+                      paragraph
+                      variant="body2"
+                      color="text.secondary"
+                    >
+                      {diseaseInfo.consequence}
+                    </Typography>
+                    <Typography>Type:</Typography>
+                    <Typography
+                      paragraph
+                      variant="body2"
+                      color="text.secondary"
+                    >
+                      {diseaseInfo.type}
+                    </Typography>
+                  </CardContent>
+                </Collapse>
+              </Card>
+              {searchResults.length > 1 && (
+                <div
+                  style={{
+                    display: "flex",
+                    marginLeft: 10,
+                    backgroundColor: "#d9d9d9",
+                    borderRadius: 5,
+                  }}
+                >
+                  <Button onClick={handleNextClick}>Next</Button>
+                </div>
+              )}
+            </div>
+          </Box>
+        )}
       </Box>
     </header>
   );
