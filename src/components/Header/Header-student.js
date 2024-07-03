@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import logo from "../../assets/logo.gif";
+import Profile from "../Profile/index";
 import makeService from "../../services/user";
 import { useNavigate } from "react-router-dom";
 import "./header.css";
@@ -29,17 +30,22 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import Tooltip from "@mui/material/Tooltip";
 import Avatar from "@mui/material/Avatar";
-import CardHeader from "@mui/material/CardHeader";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import Collapse from "@mui/material/Collapse";
-import CardContent from "@mui/material/CardContent";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
-import axios from "axios";
 
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
+
+async function onProfileClick() {
+  const res = await makeService.get_current_user();
+  console.log(res);
+}
+
+const actionHandlers = (action) => {
+  console.log(action);
+  if (action === Profile) onProfileClick();
+  // Account: handleAccountClick,
+  // Dashboard: handleDashboardClick,
+  // Logout: handleLogoutClick,
+};
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -81,18 +87,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
-  marginLeft: "auto",
-  transition: theme.transitions.create("transform", {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
-
-const Header = ({ onNotifyClick }) => {
+const Header = ({ onNotifyClick, onSearch, onDelete, allDiseases }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const [drawerState, setDrawerState] = useState({
@@ -104,15 +99,6 @@ const Header = ({ onNotifyClick }) => {
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-  const [expanded, setExpanded] = React.useState(false);
-
-  const [searchResults, setSearchResults] = useState([]);
-  const [selectedDiseaseIndex, setSelectedDiseaseIndex] = useState(0);
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
@@ -265,57 +251,74 @@ const Header = ({ onNotifyClick }) => {
     }
   }, [errorMessage]);
 
+  const [suggestions, setSuggestions] = useState([]);
+
   const handleSearchChange = (event) => {
-    setSearchQuery(event.target.value);
-  };
+    const value = event.target.value;
+    setSearchQuery(value);
 
-  const extractVietnameseName = (label) => {
-    const match = label.match(/\(([^)]+)\)/);
-    return match ? match[1] : label;
-  };
-
-  const handleSearchKeyDown = async (event) => {
-    if (event.key === "Enter") {
-      try {
-        const response = await axios.get(
-          `http://127.0.0.1:8000/api/disease/search?query=${searchQuery}`
-        );
-        setSearchResults(response.data);
-        setSelectedDiseaseIndex(0);
-        setErrorMessage("");
-      } catch (error) {
-        if (error.response && error.response.status === 404) {
-          setErrorMessage("No diseases found with that name");
-          setSearchResults(""); // Clear previous disease info if not found
-        } else {
-          console.error("Error fetching disease information:", error);
-          setErrorMessage(
-            "An error occurred while fetching disease information."
-          );
-          setSearchResults("");
-        }
-      }
+    if (value.length > 0) {
+      const filteredSuggestions = allDiseases.filter((disease) =>
+        disease.label.toLowerCase().includes(value.toLowerCase())
+      );
+      setSuggestions(filteredSuggestions);
+    } else {
+      setSuggestions([]);
     }
   };
 
+  const handleSuggestionClick = (suggestion) => {
+    setSearchQuery(suggestion.label);
+    setSuggestions([]);
+    onSearch(suggestion); // Gửi tên bệnh tới component cha
+  };
+
+  // const handleSearchKeyDown = async (event) => {
+  //   if (event.key === "Enter") {
+  //     try {
+  //       const response = await axios.get(
+  //         `http://127.0.0.1:8000/api/disease/search?query=${searchQuery}`
+  //       );
+  //       onSearch(response.data);
+  //       setErrorMessage("");
+  //     } catch (error) {
+  //       if (error.response && error.response.status === 404) {
+  //         setErrorMessage("No diseases found with that name");
+  //       } else {
+  //         console.error("Error fetching disease information:", error);
+  //         setErrorMessage(
+  //           "An error occurred while fetching disease information."
+  //         );
+  //       }
+  //     }
+  //   }
+  // };
+
   const onDeleteClick = () => {
+    setSuggestions("");
     setSearchQuery("");
-    setSearchResults("");
+    onDelete();
   };
 
-  const handlePreviousClick = () => {
-    setSelectedDiseaseIndex((prevIndex) =>
-      prevIndex > 0 ? prevIndex - 1 : prevIndex
-    );
-  };
+  const PopupBox = styled(Box)(({ theme }) => ({
+    position: "fixed", // hoặc 'absolute'
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[5],
+    paddingTop: theme.spacing(2),
+    zIndex: 1000, // đảm bảo nó nằm trên các thành phần khác
+    width: 275,
+  }));
 
-  const handleNextClick = () => {
-    setSelectedDiseaseIndex((prevIndex) =>
-      prevIndex < searchResults.length - 1 ? prevIndex + 1 : prevIndex
-    );
-  };
+  const SuggestionItem = styled(Typography)(({ theme }) => ({
+    cursor: "pointer",
+    transition: "background-color 0.3s ease, color 0.3s ease",
+    "&:hover": {
+      backgroundColor: theme.palette.action.hover,
+      color: theme.palette.primary.main,
+    },
+  }));
 
-  const diseaseInfo = searchResults[selectedDiseaseIndex];
+  const [popupPosition] = useState({ top: 155, left: 100 });
 
   return (
     <header className="header">
@@ -351,12 +354,24 @@ const Header = ({ onNotifyClick }) => {
                 inputProps={{ "aria-label": "search" }}
                 value={searchQuery}
                 onChange={handleSearchChange}
-                onKeyDown={handleSearchKeyDown}
+                // onKeyDown={handleSearchKeyDown}
               />
               <IconButton color="inherit" onClick={onDeleteClick}>
                 <DeleteIcon />
               </IconButton>
             </Search>
+            {/* {suggestions.length > 0 && (
+              <ul>
+                {suggestions.map((suggestion) => (
+                  <li
+                    key={suggestion.id}
+                    onClick={() => handleSuggestionClick(suggestion)}
+                  >
+                    {suggestion.label}
+                  </li>
+                ))}
+              </ul>
+            )} */}
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: "none", md: "flex" } }}>
               <IconButton
@@ -402,11 +417,18 @@ const Header = ({ onNotifyClick }) => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem onClick={onProfileClick}>
+                <Typography textAlign="center">Profile</Typography>
+              </MenuItem>
+              <MenuItem onClick={onProfileClick}>
+                <Typography textAlign="center">Account</Typography>
+              </MenuItem>
+              <MenuItem onClick={onProfileClick}>
+                <Typography textAlign="center">Dashboard</Typography>
+              </MenuItem>
+              <MenuItem onClick={onProfileClick}>
+                <Typography textAlign="center">Profile3</Typography>
+              </MenuItem>
             </Menu>
             <Box sx={{ display: { xs: "flex", md: "none" } }}>
               <IconButton
@@ -433,105 +455,24 @@ const Header = ({ onNotifyClick }) => {
           {drawerList("left")}
         </SwipeableDrawer>
         {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
-        {diseaseInfo && (
-          <Box bgcolor="#efeff0" sx={{ padding: 2 }}>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              {searchResults.length > 1 && (
-                <div
-                  style={{
-                    display: "flex",
-                    marginRight: 10,
-                    backgroundColor: "#d9d9d9",
-                    borderRadius: 5,
-                  }}
-                >
-                  <Button onClick={handlePreviousClick}>Previous</Button>
-                </div>
-              )}
-              <Card
-                sx={{
-                  display: "flex",
-                }}
-              >
-                <CardHeader
-                  title={diseaseInfo.name}
-                  subheader={extractVietnameseName(diseaseInfo.label)}
-                />
-                <CardActions disableSpacing>
-                  <ExpandMore
-                    expand={expanded}
-                    onClick={handleExpandClick}
-                    aria-expanded={expanded}
-                    aria-label="show more"
+        {suggestions.length > 0 && (
+          <PopupBox
+            style={{ top: popupPosition.top, left: popupPosition.left }}
+          >
+            <ul>
+              {suggestions.map((suggestion) => (
+                <SuggestionItem>
+                  <Typography
+                    paragraph
+                    key={suggestion.id}
+                    onClick={() => handleSuggestionClick(suggestion)}
                   >
-                    <ExpandMoreIcon />
-                  </ExpandMore>
-                </CardActions>
-                <Collapse in={expanded} timeout="auto" unmountOnExit>
-                  <CardContent>
-                    <Typography>Concept:</Typography>
-                    <Typography
-                      paragraph
-                      variant="body2"
-                      color="text.secondary"
-                    >
-                      {diseaseInfo.concept}
-                    </Typography>
-                    <Typography>Reason:</Typography>
-                    <Typography
-                      paragraph
-                      variant="body2"
-                      color="text.secondary"
-                    >
-                      {diseaseInfo.reason}
-                    </Typography>
-                    <Typography>Symptom:</Typography>
-                    <Typography
-                      paragraph
-                      variant="body2"
-                      color="text.secondary"
-                    >
-                      {diseaseInfo.symptom}
-                    </Typography>
-                    <Typography>Consequence:</Typography>
-                    <Typography
-                      paragraph
-                      variant="body2"
-                      color="text.secondary"
-                    >
-                      {diseaseInfo.consequence}
-                    </Typography>
-                    <Typography>Type:</Typography>
-                    <Typography
-                      paragraph
-                      variant="body2"
-                      color="text.secondary"
-                    >
-                      {diseaseInfo.type}
-                    </Typography>
-                  </CardContent>
-                </Collapse>
-              </Card>
-              {searchResults.length > 1 && (
-                <div
-                  style={{
-                    display: "flex",
-                    marginLeft: 10,
-                    backgroundColor: "#d9d9d9",
-                    borderRadius: 5,
-                  }}
-                >
-                  <Button onClick={handleNextClick}>Next</Button>
-                </div>
-              )}
-            </div>
-          </Box>
+                    {suggestion.label}
+                  </Typography>
+                </SuggestionItem>
+              ))}
+            </ul>
+          </PopupBox>
         )}
       </Box>
     </header>

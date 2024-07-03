@@ -23,15 +23,20 @@ function makeService() {
       method: "POST",
       body: form,
     };
-
-    return await fetch(url, option).then((res) => res.json());
+    const res = await fetch(url, option).then((res) => res.json());
+    document.cookie = `token=${res.token}`;
+    console.log(document.cookie);
+    return res;
+    // return await fetch(url, option).then((res) => res.json());
   }
 
   async function logout() {
     const url = "/api/user/logout";
+    console.log(document.cookie);
     const option = {
       header: header,
       method: "GET",
+      credentials: "include",
     };
     return await fetch(url, option).then((res) => res.json());
   }
@@ -41,6 +46,7 @@ function makeService() {
     const option = {
       header: header,
       method: "GET",
+      credentials: "include",
     };
     return await fetch(url, option).then((res) => res.json());
   }
