@@ -12,7 +12,7 @@ function AdminHeader({ username, avatar, onShowProfileBar }) {
     const navigate = useNavigate()
     const [user,setUser] = useState(null)
     const onBranchCLick = () => {
-        navigate("/admin/dashboard")
+        navigate("/admin")
     }
     
    

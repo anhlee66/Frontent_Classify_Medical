@@ -253,6 +253,7 @@ Layout Styles
     right: 0;
     margin-left: auto;
     margin-right: auto;
+    /* margin:blue; */
     z-index: 1;
     top:0;
     bottom: 0;

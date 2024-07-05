@@ -12,6 +12,7 @@ function Admin() {
     const [tab, setTab] = useState('dashboard')
     const onTagChange = e => {
         setTab(e.target.id)
+        // console.log(e)
     }
     const onShowProfile = () =>{
         setIsShow(!isShow)
@@ -22,7 +23,7 @@ function Admin() {
             <AdminHeader onShowProfileBar={onShowProfile} />
             {isShow &&<ProfileSidebar name="le tuan anh" />}
             <div>
-                <Sidebar onChangedTab={onTagChange} />
+                <Sidebar onChangedTab={onTagChange} tabActive={tab} />
                 <main className='acontainer'>
                     {tab == 'dashboard' && (<AdminDashboard />)}
                     {tab == 'category' && (<AdminCategory />)}

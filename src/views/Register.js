@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
-import axios from "axios";
 import { useNavigate } from "react-router-dom"
 import '../styles/style.css';
 import makeService from '../services/user'
-import user from '../services/user';
 
 const Register = () => {
     const [name, setName] = useState('')
@@ -13,7 +11,7 @@ const Register = () => {
     const [repassword, setRepassword] = useState("")
     const [msg,setMsg] = useState("")
     const navigator = useNavigate()
-    const onRegister =async (e) =>{
+    const onRegister = async (e) =>{
         e.preventDefault()
         setMsg("")
         if(password !== repassword){

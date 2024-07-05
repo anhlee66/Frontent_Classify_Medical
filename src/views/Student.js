@@ -1,16 +1,15 @@
-import { useState, useContext, useEffect } from "react"
+import { useState, } from "react"
 import { useNavigate } from "react-router-dom"
 import Header from "../components/Header/Header-student"
-import StudentHome from "../components/Profile/StudentHome"
+import StudentHome from "../components/StudentHome"
 import StudentPredict from "../components/StudentPredict"
 import Cookies from "js-cookies"
 import "../styles/student.css"
-import { UserContext } from '../App'
-import { SettingsApplicationsTwoTone } from "@mui/icons-material"
+// import { UserContext } from '../App'
 import Notification from "../components/Items/Notification"
 const Student = () => {
     const [tab, setTab] = useState("home")
-    const user = useContext(UserContext)
+    // const user = useContext(UserContext)
     const [anwser, setAnwser] = useState([])
     const [isShowNotification, setIsShowNotification] = useState(false)
     const navigate = useNavigate()
@@ -65,7 +64,8 @@ const Student = () => {
             <div>
                 {/* {tab == "home" && (<StudentHome onClick={onTagChange} />)}
                 {tab == "predict" && (<StudentPredict onCLick={onTagChange}/>)} */}
-                <StudentPredict />
+                { tab === 'home' &&<StudentHome onNavigate={onTagChange}/>}
+                { tab === 'predict' && <StudentPredict /> }
                 {isShowNotification && (<Notification notify={anwser} />)}
             </div>
         </div>

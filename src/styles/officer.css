@@ -54,5 +54,5 @@
     border: 1px solid #2d86e5;
 }
 .anwser{
-    height: 500px;
+    height: fit-content;
 }
