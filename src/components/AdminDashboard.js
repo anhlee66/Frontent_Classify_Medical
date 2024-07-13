@@ -91,7 +91,7 @@ const AdminDashboard = () => {
     console.log(url);
     await fetch(url, { method: "GET" })
       .then((res) => {
-        if (res.status == 200) {
+        if (res.status === 200) {
           return res.json();
         }
         throw new Error();
@@ -106,7 +106,7 @@ const AdminDashboard = () => {
     const url = "/api/department/all";
     await fetch(url, { method: "GET" })
       .then((res) => {
-        if (res.status == 200) {
+        if (res.status === 200) {
           return res.json();
         }
         throw new Error();
@@ -132,7 +132,7 @@ const AdminDashboard = () => {
     console.log(url);
     await fetch(url, { method: "POST" })
       .then((res) => {
-        if (res.status == 200) {
+        if (res.status === 200) {
           getQuestions(state);
           let popup = document.querySelector("#popup-container");
           popup.close();
