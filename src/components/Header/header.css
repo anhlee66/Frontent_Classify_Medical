@@ -1,13 +1,12 @@
 .header .logo {
     display: flex;
-    margin-left: px;
-    padding: 10px;
-    width: 90px;
-    height: 90px;
+    padding: 9px;
+    width: 70px;
+    height: 70px;
 }
 
 .header .header-1 {
-    background-color: lightcoral;
+    background-color: #7f7f7f;
 }
 
 .header .header-1 .flex {

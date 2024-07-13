@@ -1,21 +1,20 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header/Header-student";
-import StudentHome from "../components/Profile/StudentHome";
 import StudentPredict from "../components/StudentPredict";
 import SearchResult from "../components/DiseaseSearchResult";
+import Profile from "../components/Profile";
 import Cookies from "js-cookies";
 import "../styles/student.css";
-import { UserContext } from "../App";
-import { SettingsApplicationsTwoTone } from "@mui/icons-material";
 import Notification from "../components/Items/Notification";
 const Student = () => {
   const [tab, setTab] = useState("predict");
-  const user = useContext(UserContext);
+  // const user = useContext(UserContext);
   const [anwser, setAnwser] = useState([]);
   const [isShowNotification, setIsShowNotification] = useState(false);
   const [searchData, setSearchData] = useState("");
   const [allDiseases, setAllDiseases] = useState([]);
+  const [profiledata, setProfiledata] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -43,7 +42,7 @@ const Student = () => {
 
     await fetch(url, { method: "GET" })
       .then((res) => {
-        if (res.status == 200) {
+        if (res.status === 200) {
           return res.json();
         }
         throw new Error();
@@ -54,20 +53,6 @@ const Student = () => {
       })
       .catch((err) => console.log(err));
   };
-  // setInterval(() => {
-  //     onGetNotification()
-  // }, 60 * 1000);
-  // const iconNotify = document.getElementById("icon-notify")
-  // document.addEventListener("click",(e)=>{
-  //     const event = iconNotify.contains(e.target)
-  //     if(!event){
-  //         setIsShowNotification(false)
-  //     }
-  // })
-  const notify = [
-    { tag: "anwser", content: "hello fen" },
-    { tag: "anwser", content: "hello my name is dieu nhi" },
-  ];
 
   const onSearchClick = (data) => {
     setSearchData(data);
@@ -79,6 +64,11 @@ const Student = () => {
     setTab("predict");
   };
 
+  const onProfileClick = (data) => {
+    setProfiledata(data);
+    setTab("profile");
+  };
+
   return (
     <div>
       <Header
@@ -86,10 +76,12 @@ const Student = () => {
         onSearch={onSearchClick}
         onDelete={onSearchDelete}
         allDiseases={allDiseases}
+        profile={onProfileClick}
       />
       <div>
         {tab === "result" && <SearchResult results={searchData} />}
         {tab === "predict" && <StudentPredict />}
+        {tab === "profile" && <Profile userinfo={profiledata}></Profile>}
         {/* <SearchResult results={searchData} />
         <StudentPredict /> */}
         {isShowNotification && <Notification notify={anwser} />}

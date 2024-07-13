@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import logo from "../../assets/logo.gif";
-import Profile from "../Profile/index";
 import makeService from "../../services/user";
 import { useNavigate } from "react-router-dom";
 import "./header.css";
@@ -15,37 +14,23 @@ import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
-import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
-import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import DeleteIcon from "@mui/icons-material/Delete";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
-import Tooltip from "@mui/material/Tooltip";
-import Avatar from "@mui/material/Avatar";
-import Alert from "@mui/material/Alert";
-
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
-
-async function onProfileClick() {
-  const res = await makeService.get_current_user();
-  console.log(res);
-}
-
-const actionHandlers = (action) => {
-  console.log(action);
-  if (action === Profile) onProfileClick();
-  // Account: handleAccountClick,
-  // Dashboard: handleDashboardClick,
-  // Logout: handleLogoutClick,
-};
+import {
+  Alert,
+  Avatar,
+  Tooltip,
+  ListItemText,
+  ListItemIcon,
+  ListItemButton,
+  ListItem,
+  Divider,
+  List,
+} from "@mui/material";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -77,7 +62,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create("width"),
     width: "100%",
@@ -87,7 +71,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const Header = ({ onNotifyClick, onSearch, onDelete, allDiseases }) => {
+const Header = ({
+  onNotifyClick,
+  onSearch,
+  onDelete,
+  allDiseases,
+  profile,
+}) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const [drawerState, setDrawerState] = useState({
@@ -232,21 +222,11 @@ const Header = ({ onNotifyClick, onSearch, onDelete, allDiseases }) => {
     setAnchorElUser(null);
   };
 
-  const navigator = useNavigate();
-  async function onLogout() {
-    const res = await makeService.logout();
-    // console.log(res)
-
-    if (res.success) {
-      navigator("/login");
-    }
-  }
-
   useEffect(() => {
     if (errorMessage) {
       const timer = setTimeout(() => {
         setErrorMessage("");
-      }, 2000); // 2 seconds
+      }, 1500); // 2 seconds
       return () => clearTimeout(timer);
     }
   }, [errorMessage]);
@@ -262,6 +242,8 @@ const Header = ({ onNotifyClick, onSearch, onDelete, allDiseases }) => {
         disease.label.toLowerCase().includes(value.toLowerCase())
       );
       setSuggestions(filteredSuggestions);
+      if (filteredSuggestions.length === 0)
+        setErrorMessage("Không thể tìm thấy bệnh này");
     } else {
       setSuggestions([]);
     }
@@ -273,27 +255,6 @@ const Header = ({ onNotifyClick, onSearch, onDelete, allDiseases }) => {
     onSearch(suggestion); // Gửi tên bệnh tới component cha
   };
 
-  // const handleSearchKeyDown = async (event) => {
-  //   if (event.key === "Enter") {
-  //     try {
-  //       const response = await axios.get(
-  //         `http://127.0.0.1:8000/api/disease/search?query=${searchQuery}`
-  //       );
-  //       onSearch(response.data);
-  //       setErrorMessage("");
-  //     } catch (error) {
-  //       if (error.response && error.response.status === 404) {
-  //         setErrorMessage("No diseases found with that name");
-  //       } else {
-  //         console.error("Error fetching disease information:", error);
-  //         setErrorMessage(
-  //           "An error occurred while fetching disease information."
-  //         );
-  //       }
-  //     }
-  //   }
-  // };
-
   const onDeleteClick = () => {
     setSuggestions("");
     setSearchQuery("");
@@ -301,7 +262,7 @@ const Header = ({ onNotifyClick, onSearch, onDelete, allDiseases }) => {
   };
 
   const PopupBox = styled(Box)(({ theme }) => ({
-    position: "fixed", // hoặc 'absolute'
+    position: "fixed",
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     paddingTop: theme.spacing(2),
@@ -313,16 +274,30 @@ const Header = ({ onNotifyClick, onSearch, onDelete, allDiseases }) => {
     cursor: "pointer",
     transition: "background-color 0.3s ease, color 0.3s ease",
     "&:hover": {
-      backgroundColor: theme.palette.action.hover,
-      color: theme.palette.primary.main,
+      backgroundColor: theme.palette.action.selected,
+      color: theme.palette.primary.light,
     },
   }));
 
-  const [popupPosition] = useState({ top: 155, left: 100 });
+  const [popupPosition] = useState({ top: 59, left: 118 });
+
+  async function onProfileClick() {
+    const res = await makeService.get_current_user();
+    handleCloseUserMenu();
+    profile(res);
+  }
+
+  const navigator = useNavigate();
+  async function onLogout() {
+    const res = await makeService.logout();
+    if (res.success) {
+      navigator("/login");
+    }
+  }
 
   return (
     <header className="header">
-      <div className="header-1">
+      {/* <div className="header-1">
         <div className="flex">
           <img className="logo" src={logo} alt="Logo" />
           <div className="header-text">HỆ THỐNG NHẬN DIỆN HÌNH ẢNH Y KHOA</div>
@@ -330,12 +305,12 @@ const Header = ({ onNotifyClick, onSearch, onDelete, allDiseases }) => {
             Đăng xuất
           </button>
         </div>
-      </div>
+      </div> */}
 
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Toolbar>
-            <IconButton
+            {/* <IconButton
               size="large"
               edge="start"
               color="inherit"
@@ -344,7 +319,8 @@ const Header = ({ onNotifyClick, onSearch, onDelete, allDiseases }) => {
               onClick={toggleDrawer("left", true)}
             >
               <MenuIcon />
-            </IconButton>
+            </IconButton> */}
+            <img className="logo" src={logo} alt="Logo" />
             <Search>
               <SearchIconWrapper>
                 <SearchIcon />
@@ -360,19 +336,10 @@ const Header = ({ onNotifyClick, onSearch, onDelete, allDiseases }) => {
                 <DeleteIcon />
               </IconButton>
             </Search>
-            {/* {suggestions.length > 0 && (
-              <ul>
-                {suggestions.map((suggestion) => (
-                  <li
-                    key={suggestion.id}
-                    onClick={() => handleSuggestionClick(suggestion)}
-                  >
-                    {suggestion.label}
-                  </li>
-                ))}
-              </ul>
-            )} */}
-            <Box sx={{ flexGrow: 1 }} />
+            {/* <Box sx={{ flexGrow: 1 }} /> */}
+            <div className="header-text">
+              HỆ THỐNG NHẬN DIỆN HÌNH ẢNH Y KHOA
+            </div>
             <Box sx={{ display: { xs: "none", md: "flex" } }}>
               <IconButton
                 size="large"
@@ -420,14 +387,14 @@ const Header = ({ onNotifyClick, onSearch, onDelete, allDiseases }) => {
               <MenuItem onClick={onProfileClick}>
                 <Typography textAlign="center">Profile</Typography>
               </MenuItem>
-              <MenuItem onClick={onProfileClick}>
+              <MenuItem>
                 <Typography textAlign="center">Account</Typography>
               </MenuItem>
-              <MenuItem onClick={onProfileClick}>
+              <MenuItem>
                 <Typography textAlign="center">Dashboard</Typography>
               </MenuItem>
-              <MenuItem onClick={onProfileClick}>
-                <Typography textAlign="center">Profile3</Typography>
+              <MenuItem onClick={onLogout}>
+                <Typography textAlign="center">Logout</Typography>
               </MenuItem>
             </Menu>
             <Box sx={{ display: { xs: "flex", md: "none" } }}>
