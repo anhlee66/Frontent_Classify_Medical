@@ -12,7 +12,7 @@ const ImageList = ({ images, onImageClick, isReady=false }) => (
                         className="image-thumbnail "
                         onClick={() => onImageClick(value.src, index)}
                     />
-                    {!value.isDone && (<div className='spinner' style={{ position:"absolute",left:"70px",top:"70px"}}></div>)}
+                    {!value.isDone && (<div className='spinner' id={`spinner${index}`} style={{ position:"absolute",left:"70px",top:"70px"}}></div>)}
                 </div>
             ))}
         </div>

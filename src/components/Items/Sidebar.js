@@ -3,8 +3,10 @@ import makeService from '../../services/user'
 import { useNavigate } from "react-router-dom"
 import { faChartLine, faFolder, faUsers, faRightFromBracket } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-function Sidebar({ onChangedTab }) {
+function Sidebar({ onChangedTab, tabActive }) {
     const navigator = useNavigate()
+    // const active = document.getElementById(tabActive)
+    // active.style.background ="black"
     async function onLogout() {
         const res = await makeService.logout()
         // console.log(res)
@@ -13,13 +15,14 @@ function Sidebar({ onChangedTab }) {
             navigator('/login')
         }
     }
+    
     return (
         <aside className="sidebar">
             <nav>
                 <ul>
                     <li id="dashboard" onClick={onChangedTab}>
                         <FontAwesomeIcon className="sidebar-icon" icon={faChartLine} />
-                        <p>Dashboard</p>
+                        <p >Dashboard</p>
                     </li>
                     <li id="category" onClick={onChangedTab}>
                         <FontAwesomeIcon className="sidebar-icon" icon={faFolder} />

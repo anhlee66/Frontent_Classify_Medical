@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import makeService from "../services/user"
 const Login = () => {
@@ -19,10 +18,10 @@ const Login = () => {
         console.log(res)
         if (res.success) {
             // console.log(res.user['permission'])
-            if (res.user['permission'] == 'admin') {
-                navigate('/admin/dashboard')
+            if (res.user['permission'] === 'admin') {
+                navigate('/admin')
             }
-            else if (res.user['permission'] == 'officer') {
+            else if (res.user['permission'] === 'officer') {
                 navigate('/officer')
             }
             else navigate('/student')

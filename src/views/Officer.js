@@ -5,23 +5,45 @@ import OfficerDashboard from "../components/OfficerDashboard"
 import Sidebar from '../components/Items/Sidebar'
 import ProfileSidebar from "../components/Items/ProfileSidebar"
 import '../styles/officer.css'
+import Cookies from "js-cookies"
+
 import { Form } from 'react-router-dom'
+import OfficerViewAnswer from '../components/Items/OfficerViewAnwser'
 function Officer() {
     const [isShow, setIsShow] = useState(false)
     const [questions, setQuestions] = useState([])
     const [selectedImage, setSelectedImage] = useState(null)
     const [tab, setTab] = useState('dashboard')
     const [isShowAnwser, setIsShowAnwser] = useState(false)
-    const [content, setContent] = useState(null)
+    const [isViewAnswer, setIsViewAnswer] = useState(false)
+    const [content, setContent] = useState("")
+    const [state, setState] = useState("all")
+    const [selectedQuestion, setSelectedQuestion] = useState(null)
+    const [diseases, setDiseases] = useState([])
+    const [selectedDisease, setSelectedDisease] = useState("null")
     const onTagChange = e => {
         setTab(e.target.id)
     }
     const onShowProfile = () => {
         setIsShow(!isShow)
     }
+    const GetAllDisease = async () => {
+        const url = "/api/disease/all"
+        await fetch(url, { method: "GET" })
+            .then(res => {
+                if (res.status == 200) {
+                    return res.json()
+                }
+                throw new Error
+            })
+            .then(data => setDiseases(data))
+            .catch(err => console.log(err))
+    }
     const GetQuestion = async (state = "all") => {
-        const url = `/api/question/all/question?state=${state}`
-        console.log(state)
+        const user = Cookies.getItem("current_user")
+        // console.log('user', user)
+        const url = `/api/question?state=${state}`
+        // console.log(state)
         const res = await fetch(url, { method: "GET" })
             .then(res => {
                 if (res.status == 200) {
@@ -48,6 +70,9 @@ function Officer() {
         form.append("image", image, `image.jpg`)
         form.append("content", content)
         form.append("question_id", selectedImage.id)
+        if(!isNaN(selectedDisease) ){
+            form.append("disease_id",selectedDisease)
+        }
 
         await fetch(url, {
             method: "POST",
@@ -73,24 +98,54 @@ function Officer() {
             alert(msg)
         }, 100)
     }
+    const ViewAnswer = ({ onClick }) => {
+        const questionType = document.getElementById("question-type")
+        // console.log(questionType)
+        if (questionType.value == "done") {
+            return (
+                <button onClick={onClick}>
+                    View anwser
+                </button>
+            )
+        }
+        return (<></>)
+    }
+    const onShowAnswer = (id) => {
+        setIsViewAnswer(true)
+        setSelectedQuestion(id)
+    }
+    const onDiseaseChange = (e) =>{
+        setSelectedDisease(e.target.value)
+    }
     useEffect(() => {
         const startUp = async () => {
             await GetQuestion()
+            await GetAllDisease()
         }
         startUp()
     }, [])
     return (
         <div className='admin-page'>
+            {isViewAnswer && <OfficerViewAnswer onBack={e => setIsViewAnswer(false)} questionId={selectedQuestion} />}
             <OfficerHeader onShowProfileBar={onShowProfile} />
             {isShow && <ProfileSidebar name="le tuan anh" />}
             <main className='officer-container'>
                 <div className='question-table-container'>
                     <div>
-                        <select className='question-option' defaultValue="all" onChange={e => GetQuestion(e.target.value)}>
+                        <select id="question-type"
+                            className='question-option'
+                            defaultValue={state}
+                            onChange={e => {
+                                GetQuestion(e.target.value)
+                                setState(e.target.value)
+                            }}>
                             <option value="wait">Chờ phản hồi</option>
                             <option value="done">Đã phản hồi</option>
                             <option value="all">Tất cả</option>
                         </select>
+                        <button className='button'
+                            onClick={e => GetQuestion(state)}
+                        >Reload</button>
                     </div>
                     <table className='question-table'>
                         <thead>
@@ -99,7 +154,7 @@ function Officer() {
                                 <th>User</th>
                                 <th>Image</th>
                                 <th>Content</th>
-                                <th>Time</th>
+                                {/* <th>Time</th> */}
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -110,13 +165,14 @@ function Officer() {
                                     <td>{value.name}</td>
                                     <td><img style={{ width: "70px" }} src={`data:image/jpeg;base64,${value['image']}`} /></td>
                                     <td>{value.content}</td>
-                                    <td>{value.created}</td>
+                                    {/* <td>{value.created}</td> */}
                                     <td>
                                         <button onClick={(e) => {
                                             setIsShowAnwser(true)
                                             setSelectedImage(value)
                                         }}>Anwser</button>
                                         <button onClick={() => setSelectedImage(value)}>View</button>
+                                        {value.isAnwser && <ViewAnswer onClick={e => onShowAnswer(value.id)} />}
                                     </td>
                                 </tr>
 
@@ -157,11 +213,22 @@ function Officer() {
                                             name="content"
                                             className="form-control"
                                             onChange={(e) => setContent(e.target.value)} />
-
+                                        <div style={{ marginLeft: "20px", width: "490px" }} className='form-control'>
+                                            <select onChange={onDiseaseChange}>
+                                                <option value="null">Không xác định</option>
+                                                {diseases.length > 0 && diseases.map((value, index) => (
+                                                    <option key={index} value={value.id}>
+                                                        {value.label}
+                                                    </option>
+                                                ))}
+                                                <option value="order">Khác</option>
+                                            </select>
+                                        </div>
                                         <div className="form-group">
-                                            <input type="submit" value="Send" onClick={onSendAnwser} />
+                                            <input type="submit" value="Send" onClick={onSendAnwser} disabled={content == ""} />
                                             <input type="button" value="Cancel" onClick={() => setIsShowAnwser(false)} />
                                         </div>
+
 
                                     </form>
                                 </div>

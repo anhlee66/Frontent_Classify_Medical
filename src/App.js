@@ -38,7 +38,7 @@ function App(){
             <Routes>
                 <Route path="/" Component={Home}/>
                 <Route path='/login' Component={Login}/>
-                <Route path='/admin/dashboard' Component={Admin} />
+                <Route path='/admin' Component={Admin} />
                 <Route path='/profile' Component={<Profile token={jwtDecode} />}/>
                 <Route path='/student' Component={Student} />
                 <Route path='/officer' Component={Officer} /> 

@@ -59,7 +59,7 @@ html {
 
 .form-container form {
     padding: 2rem;
-    width: 40rem;
+    width: 30rem;
     border-radius: .5rem;
     box-shadow: var(--box-shadow);
     /* border: var(--border); */
@@ -70,14 +70,14 @@ html {
 .form-container form .label {
     display: block;
     width: 100%;
-    padding: rem 1.4rem;
+    padding: rem 1rem;
     font-size: 1rem;
     margin: .5rem 0;
     text-align: left;
 }
 
 .form-container form p {
-    padding-top: 1.5rem;
+    padding-top: 1rem;
     font-size: 19px;
     color: var(--black);
 }
@@ -87,7 +87,7 @@ html {
 }
 
 .form-container form h3 {
-    font-size: 2.5rem;
+    font-size: 2rem;
     text-transform: uppercase;
     color: var(--black);
     justify-content: center;
@@ -98,8 +98,8 @@ html {
     width: 100%;
     border-radius: .5rem;
     background-color: var(--light-bg);
-    padding: 1rem 1.4rem;
-    font-size: 1.8rem;
+    padding: 1rem 1rem;
+    font-size: 1rem;
     color: var(--black);
     border: var(--border);
     margin: 1rem 0;
@@ -111,11 +111,11 @@ html {
 
 .btn {
     display: inline-block;
-    margin-top: 10px;
-    padding: 5px 5px;
+    margin-top: 0.5em;
+    padding: 1rem 1rem;
     cursor: pointer;
     color: var(--white);
-    font-size: 1.8rem;
+    font-size: 1rem;
     border-radius: .5rem;
     text-transform: capitalize;
     background-color: rgb(39, 116, 249)
@@ -216,10 +216,6 @@ html {
 /* admin dashborad */
 
 
-
-.body {
-    /* clear: both; */
-}
 
 .sidebar{
     float:left;

@@ -6,11 +6,11 @@ function Home() {
 
     function redirect() {
         const permission = Cookies.getItem("permission")
-        if (permission.match('student')) {
+        if (permission === 'student'){
             navigator('/student')
         }
-        else if (permission.match('admin')) {
-            navigator('/admin/dashboard')
+        else if (permission === 'admin') {
+            navigator('/admin')
         }
         else {
             navigator('/login')

@@ -17,7 +17,6 @@ const StudentPredict = () => {
     const [detail, setDetail] = useState(null)
     const [isShowQuestion, setIsShowQuestion] = useState(false)
     const [isShowSimilar, setIsShowSimilar] = useState(false)
-    const [ex,setEx] = useState(false)
     const handleFileChange = async ({ target: { files } }) => {
         if (files) {
             const listFile = []
@@ -29,40 +28,40 @@ const StudentPredict = () => {
                     fileName: file.name,
                     src: URL.createObjectURL(file),
                     isDone: false,
-                    isSend: false
+                    isSending: false
                 })
 
             }
             setFileData([...fileData, ...listFile]);
-
-
         }
 
     };
     useEffect(() => {
         fileData.forEach(async (e, index) => {
-            if(e.isSend) return
+            if(e.isSending) return
             if (!e.isDone) {
                 // console.log(e.fileName, "=", index)
-                e.isSend = true
+                e.isSending = true
                 await UploadImage(e, index)
                     .then(res => {
                         if (res.status == 200) {
                             return res.json()
                         }
+
                         throw new Error
                     })
                     .then(data => {
-                        // console.log(data)
                         e.isDone = true
-                        e.isSend = false
+                        e.isSending = false
+                        let spinner = document.querySelector(`#spinner${index}`)
+                        spinner.style.display = "none"
+                        console.log(spinner)
                         response.push(data[0])
                         setResponse(response)
-                        setFileData(fileData)
-                        console.log(fileData)
-                        console.log("file changed")
-
-
+                        console.log(data)
+                        // setFileData(fileData)
+                        // console.log(fileData)
+                        // console.log("file changed")
                     })
                     .catch(err => console.log(err))
 
@@ -71,11 +70,11 @@ const StudentPredict = () => {
         });
     }, [fileData])
 
-    useEffect(() => {
-        setFileData(fileData) 
-        console.log("changed")
-    }
-    , [response])
+    // useEffect(() => {
+    //     setFileData(fileData) 
+    //     console.log("changed")
+    // }
+    // , [response])
 
     const UploadImage = async (e, index) => {
         const formData = new FormData()
@@ -104,7 +103,6 @@ const StudentPredict = () => {
         setDetail(null)
         setSelectedImage([])
         const file = fileData[index]
-        console.log(file.isSend)
         if(file.isSend){
            showMessage("This image are prcessing, please wait!")
             return
@@ -119,19 +117,18 @@ const StudentPredict = () => {
             })
         }
         else {
-            
             await UploadImage(file, index)
                 .then(res => {
                     if (res.status == 200) {
-                        file.isSend = false
+                        file.isSending = false
                         return res.json()
                     }
                     throw new Error
                 })
                 .then(data => {
-                    // console.log(data)
+                    console.log(data)
                     file.isDone = true
-
+                    // let spinner = document.querySelector(`{}`)
                     setResponse([...response, data[0]])
                     setCurrent(data[0])
                     setSimilar(data[0].image_base64)

@@ -7,15 +7,27 @@ import Profile from "../components/Profile";
 import Cookies from "js-cookies";
 import "../styles/student.css";
 import Notification from "../components/Items/Notification";
+
 const Student = () => {
   const [tab, setTab] = useState("predict");
-  // const user = useContext(UserContext);
   const [anwser, setAnwser] = useState([]);
   const [isShowNotification, setIsShowNotification] = useState(false);
   const [searchData, setSearchData] = useState("");
   const [allDiseases, setAllDiseases] = useState([]);
   const [profiledata, setProfiledata] = useState([]);
   const navigate = useNavigate();
+  // const Student = () => {
+  //     const [tab, setTab] = useState("home")
+  //     const [anwser, setAnwser] = useState([])
+  //     const [isShowNotification, setIsShowNotification] = useState(false)
+  //     const navigate = useNavigate()
+  //     const onTagChange = (value) => {
+  //         setTab(value)
+  //         console.log(value)
+  //     }
+  // const onNotifyClick = () => {
+  //     setIsShowNotification(!isShowNotification)
+  //     onGetNotification()
 
   useEffect(() => {
     // Tải toàn bộ dữ liệu bệnh từ API
@@ -58,6 +70,16 @@ const Student = () => {
     setSearchData(data);
     setTab("result");
   };
+  // setInterval(() => {
+  //     onGetNotification()
+  // }, 60 * 1000);
+  // const iconNotify = document.getElementById("icon-notify")
+  // document.addEventListener("click",(e)=>{
+  //     const event = iconNotify.contains(e.target)
+  //     if(!event){
+  //         setIsShowNotification(false)
+  //     }
+  // })
 
   const onSearchDelete = () => {
     setSearchData("");
@@ -89,5 +111,4 @@ const Student = () => {
     </div>
   );
 };
-
 export default Student;

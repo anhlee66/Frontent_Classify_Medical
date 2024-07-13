@@ -1,18 +1,13 @@
 import { useNavigate } from "react-router-dom";
-
 import logo from "../../assets/logo.gif";
 import Search from "./Search";
 import { faBars, faBell } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import user from "../../assets/fontawesome/svgs/regular/user.svg";
-import { useScrollTrigger } from "@mui/material";
-import { useEffect, useState } from "react";
 function AdminHeader({ username, avatar, onShowProfileBar }) {
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
   const onBranchCLick = () => {
-    navigate("/admin/dashboard");
+    navigate("/admin");
   };
 
   return (
@@ -35,7 +30,7 @@ function AdminHeader({ username, avatar, onShowProfileBar }) {
           />
         </div>
         <div className="profile" onClick={onShowProfileBar}>
-          <img src={logo} style={{ width: 30 }} />
+          <img alt="" src={logo} style={{ width: 30 }} />
         </div>
       </div>
     </div>

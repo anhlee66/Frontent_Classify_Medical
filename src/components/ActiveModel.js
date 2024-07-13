@@ -33,17 +33,22 @@ const ActiveModel = ({ model=null,refresh }) => {
         .then(res => res)
         .catch(err => console.log(err))
         if(res.status == 200){
+            onShowMessage("Thay đổi mô hình hiện tại thành công")
             onClose()
-            alert("Change active model successful!")
         }
         else{
+            onShowMessage("Lỗi hệ thống")
             onClose()
-            alert("Error roi ma oi")
         }
         refresh()
         console.log(res)
     }
-   
+    const onShowMessage = (msg) =>{
+        setTimeout(() =>{
+            alert(msg)
+
+        },100)
+    }
     return (
         <div className="model-picker">
             <p >Choose active model</p>
@@ -52,7 +57,7 @@ const ActiveModel = ({ model=null,refresh }) => {
                     <div key={index} onClick={e => onSetActive(e, index)} className={active == index ? "active" : ""}  >
                         <div style={{width:"90%"}}>
                             <p>{value.path}</p>
-                            <p>{value.accuracy * 100}%</p>
+                            <p>{Math.round(value.accuracy* 100 )}%</p>
                         </div>
                         {value.isActive &&
                             <FontAwesomeIcon icon={faCheck} />
